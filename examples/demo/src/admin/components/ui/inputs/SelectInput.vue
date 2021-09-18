@@ -1,0 +1,31 @@
+<template>
+  <v-select
+      v-bind="{...$attrs, ...commonProps}"
+      :multiple="multiple"
+      :item-text="itemText"
+      :item-value="itemValue"
+      :items="options || enums"
+      :loading="loading"
+      :persistent-hint="!!commonProps.hint"
+      @change="change"
+      @input="update"
+  >
+  </v-select>
+
+</template>
+
+<script>
+import Input from "@lowcoder/easy-admin/src/mixins/input"
+import Multiple from "@lowcoder/easy-admin/src/mixins/multiple"
+import Select from "@lowcoder/easy-admin/src/mixins/select"
+import Reference from "@lowcoder/easy-admin/src/mixins/reference"
+
+export default {
+  mixins: [Input, Multiple, Select, Reference],
+  async created() {
+    if (this.reference) {
+      this.options = await this.fetchReferenceItems();
+    }
+  },
+};
+</script>

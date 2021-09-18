@@ -1,0 +1,49 @@
+{
+  "name": "@lowcoder/easy-admin",
+  "version": "0.0.1",
+  "description": "Admin framework for Vue.js",
+  "main": "dist/admin.common.js",
+  "module": "src/index.js",
+  "keywords": [
+    "admin",
+    "rest",
+    "vue",
+    "vue-admin",
+    "vue-cli",
+    "vuetify",
+    "framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lowcoder66/easy-admin.git",
+    "directory": "packages/core"
+  },
+  "author": "lowcoder <lowcoder66@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/lowcoder66/easy-admin.git",
+  "scripts": {
+    "build": "vue-cli-service build --name admin --target lib src/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "ejs": "^3.1.6",
+    "globby": "^12.0.2",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2",
+    "vue-docgen-api": "^4.41.2"
+  },
+  "peerDependencies": {
+    "moment": "^2.29.1",
+    "vue": "^2.6.14",
+    "vue-i18n": "^8.25.1",
+    "vue-router": "^3.5.2",
+    "vue-template-compiler": "^2.6.14",
+    "vuex": "^3.6.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "qs": "^6.9.4"
+  }
+}

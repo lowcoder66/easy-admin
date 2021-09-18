@@ -1,0 +1,37 @@
+{
+  "name": "@lowcoder/vue-cli-plugin-easy-admin",
+  "version": "0.0.1",
+  "description": "Vue CLI plugin for Easy Admin",
+  "main": "index.js",
+  "keywords": [
+    "admin",
+    "rest",
+    "vue",
+    "vue-admin",
+    "vue-cli",
+    "vuetify",
+    "easy-admin",
+    "front-end",
+    "framework",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lowcoder66/easy-admin.git",
+    "directory": "packages/vue-cli-plugin"
+  },
+  "author": "lowcoder <lowcoder66@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/lowcoder66/easy-admin.git",
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "devDependencies": {
+    "@lowcoder/easy-admin": "file:../core",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-plugin-router": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "vue-cli-plugin-i18n": "^2.1.3",
+    "vue-cli-plugin-vuetify": "^2.4.2"
+  }
+}
