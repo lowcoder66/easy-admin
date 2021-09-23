@@ -1,10 +1,10 @@
 <template>
   <v-switch
-      :false-value="false"
-      :true-value="true"
-      :input-value="input"
-      v-bind="{...$attrs, ...commonProps}"
-      @change="changeState"
+    :false-value="false"
+    :true-value="true"
+    :input-value="input"
+    v-bind="{ ...$attrs, ...commonProps }"
+    @change="changeState"
   ></v-switch>
 </template>
 
@@ -17,9 +17,9 @@ export default {
   },
   methods: {
     changeState(value) {
-      this.change(value);
-      this.update(value);
+      this.change(value)
+      this.update(value)
     },
   },
-};
+}
 </script>

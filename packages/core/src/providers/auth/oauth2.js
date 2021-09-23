@@ -17,8 +17,8 @@ export default (
       user: params.userServicePrefix + "/users?principal",
     },
     authClient: params.authClient || "auth-client",
-    tokenStorageKey: "EA:token",
-    userInfoStorageKey: "EA:userinfo",
+    tokenStorageKey: params.tokenStorageKey || process.env.VUE_APP_EM_STORAGE_TOKEN_KEY || "EA:token",
+    userInfoStorageKey: params.userInfoStorageKey || process.env.VUE_APP_EM_STORAGE_USERINFO_KEY || "EA:userinfo",
     getToken: () => {
       let storageTokenStr = localStorage.getItem(tokenStorageKey)
       return storageTokenStr ? JSON.parse(storageTokenStr) : null

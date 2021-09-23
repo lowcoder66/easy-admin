@@ -12,10 +12,8 @@ import RetrieveLayout from "../../../mixins/retrieve-layout"
 
 export default {
   mixins: [RetrieveLayout],
-  components: {DataGrid},
+  components: { DataGrid },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

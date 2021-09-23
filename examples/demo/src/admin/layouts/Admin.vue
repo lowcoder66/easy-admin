@@ -82,7 +82,7 @@
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on" class="mr-2">
             <v-avatar size="30" color="primary">
-              <span class="white--text text-h6">{{ (user.name || "?").substr(0, 1) }}</span>
+              <span class="white--text text-h6">{{ ((user && user.name) || "?").substr(0, 1) }}</span>
             </v-avatar>
           </v-btn>
         </template>
@@ -90,9 +90,9 @@
         <v-card>
           <v-list-item-content class="justify-center">
             <div class="mx-auto text-center pa-2">
-              <h3>{{ user.name }}</h3>
+              <h3>{{ user && user.name }}</h3>
               <p class="caption mt-1">
-                {{ user.email }}
+                {{ user && user.email }}
               </p>
               <v-divider class="my-2"></v-divider>
               <v-btn block color="error darken-1" text @click="logout">退出登录</v-btn>

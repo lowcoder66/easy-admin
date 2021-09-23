@@ -12,18 +12,18 @@
 </template>
 
 <script>
-import Resource from "@lowcoder/easy-admin/src/mixins/resource";
-import set from "lodash/set";
+import Resource from "@lowcoder/easy-admin/src/mixins/resource"
+import set from "lodash/set"
 import SaveButton from "./buttons/SaveButton"
 import ResetButton from "./buttons/ResetButton"
 
 export default {
-  components: {ResetButton, SaveButton},
+  components: { ResetButton, SaveButton },
   mixins: [Resource],
   provide() {
     return {
       formState: this.formState,
-    };
+    }
   },
   props: {
     value: {
@@ -51,12 +51,12 @@ export default {
         item: {},
         model: {},
         update: ({ source, value }) => {
-          let model = { ...this.formState.model };
-          set(model, source, value);
+          let model = { ...this.formState.model }
+          set(model, source, value)
 
-          this.formState.model = model;
+          this.formState.model = model
 
-          this.$emit("input", model);
+          this.$emit("input", model)
         },
         submit: () => {
           this.save()
@@ -65,13 +65,13 @@ export default {
           this.reset()
         },
       },
-    };
+    }
   },
   watch: {
     value: {
       handler(val) {
         if (val) {
-          this.formState.item = val;
+          this.formState.item = val
         }
       },
       deep: true,
@@ -85,17 +85,17 @@ export default {
     reset() {
       this.$refs.form.reset()
       this.$nextTick(() => {
-        this.formState.item = {...this.originalValue}
+        this.formState.item = { ...this.originalValue }
       })
 
-      this.$emit("reset");
+      this.$emit("reset")
     },
     async save() {
       if (!this.$refs.form.validate()) {
-        return;
+        return
       }
 
-      this.formState.saving = true;
+      this.formState.saving = true
 
       try {
         let { data } = this.id
@@ -105,45 +105,44 @@ export default {
             })
           : await this.$store.dispatch(`${this.resource}/create`, {
               data: this.formState.model,
-            });
+            })
 
         this.$refs.form.reset()
-        this.$emit("saved", data);
+        this.$emit("saved", data)
 
         this.afterSave(data ? data.id : null)
       } finally {
-        this.formState.saving = false;
+        this.formState.saving = false
       }
     },
     afterSave(itemId) {
       if (this.redirect) {
-        const toAction = this.currentResource.actions.find(pa => pa.key === this.redirect)
-        let actionLink = this['$admin'].getActionLink(this.resource, toAction) || "index"
+        const toAction = this.currentResource.actions.find((pa) => pa.key === this.redirect)
+        let actionLink = this["$admin"].getActionLink(this.resource, toAction) || "index"
 
         switch (this.redirect) {
           case "retrieve":
-            this.$router.push({name: actionLink});
-            break;
+            this.$router.push({ name: actionLink })
+            break
           case "create":
-            this.formState.item = this.originalValue;
-            this.$router.push({name: actionLink});
-            break;
+            this.formState.item = this.originalValue
+            this.$router.push({ name: actionLink })
+            break
           case "show":
           case "update":
             this.$router.push({
               name: actionLink,
-              params: {id: itemId},
-            });
-            break;
+              params: { id: itemId },
+            })
+            break
           default:
-            // do nothing
+          // do nothing
         }
       }
-    }
+    },
   },
-};
+}
 </script>
-
 
 <style scoped lang="sass">
 .form-actions

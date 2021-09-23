@@ -1,17 +1,17 @@
 <template>
   <ActionButton
-      v-bind="$attrs"
-      :resource="resource"
-      :display-mode="displayMode"
-      :btn-icon="btnIcon || 'mdi-dots-horizontal-circle'"
-      :color="color || 'secondary'"
-      :label="label"
-      :btn-label="btnLabel"
-      :action-key="actionKey"
-      :id="id"
-      :item="item"
-      @click="onClick"
-      @action-completed="onActionCompleted"
+    v-bind="$attrs"
+    :resource="resource"
+    :display-mode="displayMode"
+    :btn-icon="btnIcon || 'mdi-dots-horizontal-circle'"
+    :color="color || 'secondary'"
+    :label="label"
+    :btn-label="btnLabel"
+    :action-key="actionKey"
+    :id="id"
+    :item="item"
+    @click="onClick"
+    @action-completed="onActionCompleted"
   />
 </template>
 
@@ -21,7 +21,7 @@ import Button from "../../../mixins/button"
 
 export default {
   mixins: [Button],
-  components: {ActionButton},
+  components: { ActionButton },
   props: {
     action: {
       type: String,
@@ -36,12 +36,10 @@ export default {
   },
   methods: {
     onActionCompleted() {
-      this.$emit('action-completed')
-    }
-  }
+      this.$emit("action-completed")
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,21 +1,18 @@
 <template>
-  <ActionWrapper
-      :title="title"
+  <ActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
+    <Form
+      readonly
+      :id="id"
+      :value="item"
       :resource="resource.name"
-      :display-mode="displayMode"
-      @cancel="onCancelAction"
-  >
-    <Form readonly
-          :id="id"
-          :value="item"
-          :resource="resource.name"
-          @saved="handleFormSaved"
-          :redirect="displayMode === 'page' ? 'retrieve' : false">
+      @saved="handleFormSaved"
+      :redirect="displayMode === 'page' ? 'retrieve' : false"
+    >
       <component
-          v-for="input in inputs"
-          :key="input.source"
-          :source="input.source"
-          :is="`ea-${input.type}-input`"
+        v-for="input in inputs"
+        :key="input.source"
+        :source="input.source"
+        :is="`ea-${input.type}-input`"
       ></component>
     </Form>
   </ActionWrapper>
@@ -23,7 +20,7 @@
 
 <script>
 import Form from "../ui/Form"
-import {guessInputs} from "@lowcoder/easy-admin/src/utils/guesser"
+import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
 import ActionWrapper from "../ui/ActionWrapper"
 
 export default {
@@ -32,26 +29,22 @@ export default {
     resource: Object,
     item: Object,
     id: {
-      type: [String, Number]
+      type: [String, Number],
     },
     displayMode: {
       type: String,
-      validator: (v) => ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
     },
   },
-  components: {ActionWrapper, Form},
+  components: { ActionWrapper, Form },
   data() {
     return {
       inputs: [],
-    };
+    }
   },
   async created() {
-    this.inputs = await guessInputs(
-        this.$store,
-        this.$i18n,
-        this.resource.name
-    );
+    this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
   },
   methods: {
     handleFormSaved(data) {
@@ -64,6 +57,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

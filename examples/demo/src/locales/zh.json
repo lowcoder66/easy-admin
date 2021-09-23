@@ -3,14 +3,53 @@
     "zh": "Chinese"
   },
   "menu": {
-    "dashboard": "仪表盘"
+    "dashboard": "仪表盘",
+    "org": "组织机构",
+    "org_authorities": "权限管理",
+    "org_roles": "角色管理",
+    "org_employees": "员工管理",
+    "org_positions": "职位管理"
   },
   "resources": {
-    "user": {
-      "name": "用户 | 用户",
+    "authorities": {
+      "name": "权限 | 权限",
       "fields": {
-        "name": "姓名",
-        "phone": "电话"
+        "name": "名称",
+        "code": "代码",
+        "description": "描述",
+        "builtIn": "内置的"
+      }
+    },
+    "roles": {
+      "name": "角色 | 角色",
+      "fields": {
+        "name": "名称",
+        "code": "代码",
+        "description": "描述",
+        "builtIn": "内置的"
+      }
+    },
+    "departments": {
+      "name": "部门 | 部门",
+      "fields": {
+        "name": "名称",
+        "parent": "上级部门"
+      }
+    },
+    "employees": {
+      "name": "员工 | 员工",
+      "fields": {
+        "name": "名称",
+        "phone": "手机"
+      }
+    },
+    "positions": {
+      "name": "职位 | 职位",
+      "fields": {
+        "name": "名称",
+        "code": "代码",
+        "description": "描述",
+        "builtIn": "内置的"
       }
     }
   },

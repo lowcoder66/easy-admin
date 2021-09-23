@@ -53,8 +53,9 @@ export default (provider, router) => {
       /**
        * Explicit logout action, remove user from storage
        */
-      [LOGOUT]: async () => {
+      [LOGOUT]: async ({ commit }) => {
         await provider[LOGOUT]()
+        commit("setUser", null)
         router.push({ name: "login" })
       },
       /**

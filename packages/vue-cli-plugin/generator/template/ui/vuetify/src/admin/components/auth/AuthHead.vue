@@ -6,36 +6,35 @@
       </v-avatar>
     </template>
     <template v-else>
-      <img alt="app-logo" src="@/assets/logo.svg" width="80" height="80"/>
+      <img alt="app-logo" src="@/assets/logo.svg" width="80" height="80" />
     </template>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
 
 export default {
   name: "AuthHead",
   props: {
-    inputEmail: {
+    inputUsername: {
       type: String,
       default: null,
-    }
+    },
   },
   data() {
-    return {
-      name: "张三",
-      email: "zhangsan@some.com",
-    }
+    return {}
   },
   computed: {
-
+    ...mapState("auth", {
+      username: (state) => state.user && state.user.email,
+      name: (state) => state.user && state.user.name,
+    }),
     showUserAvatar() {
-      return this.name && this.inputEmail === this.email
-    }
+      return this.name && this.inputUsername === this.username
+    },
   },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
