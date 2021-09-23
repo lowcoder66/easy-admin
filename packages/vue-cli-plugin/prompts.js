@@ -69,18 +69,18 @@ module.exports = [
     type: "input",
     name: "oauth2.authClient",
     message: "[OAuth2]输入认证客户端（client id）：",
-    when: (input) => input.authProvider === 'oauth2',
+    when: (input) => input.authProvider === "oauth2",
   },
   {
     type: "input",
     name: "oauth2.authServicePrefix",
     message: "[OAuth2]输入认证服务前缀：",
-    when: (input) => input.authProvider === 'oauth2',
+    when: (input) => input.authProvider === "oauth2",
   },
   {
     type: "input",
     name: "oauth2.userServicePrefix",
     message: "[OAuth2]输入用户服务前缀：",
-    when: (input) => input.authProvider === 'oauth2',
+    when: (input) => input.authProvider === "oauth2",
   },
-];
+]

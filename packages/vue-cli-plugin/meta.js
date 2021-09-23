@@ -1,22 +1,19 @@
-const path = require("path");
-const fs = require("fs");
-const rimraf = require("rimraf");
-const mkdirp = require("mkdirp");
-const { getDocComponents } = require("./docgen");
+const path = require("path")
+const fs = require("fs")
+const rimraf = require("rimraf")
+const mkdirp = require("mkdirp")
+const { getDocComponents } = require("./docgen")
 
-const metaDir = path.resolve(__dirname, "dist/json");
+const metaDir = path.resolve(__dirname, "dist/json")
 
-rimraf.sync(metaDir);
-mkdirp.sync(metaDir);
+rimraf.sync(metaDir)
+mkdirp.sync(metaDir)
 
-let webTypesJson = [];
+let webTypesJson = []
 
 const writeJsonFile = (dir, file, json) => {
-  fs.writeFileSync(
-    path.resolve(dir, file),
-    JSON.stringify(json, null, 2) + "\n"
-  );
-};
+  fs.writeFileSync(path.resolve(dir, file), JSON.stringify(json, null, 2) + "\n")
+}
 
 getDocComponents().then((docs) => {
   docs.forEach((doc) => {
@@ -24,7 +21,7 @@ getDocComponents().then((docs) => {
      * Generate Jetbrains meta
      */
     let tagName = `Ea${doc.displayName}`
-    if (webTypesJson.findIndex(t => t.name === tagName) < 0) {
+    if (webTypesJson.findIndex((t) => t.name === tagName) < 0) {
       webTypesJson.push({
         name: tagName,
         description: doc.description,
@@ -35,13 +32,12 @@ getDocComponents().then((docs) => {
               kind: "expression",
               type: p.type.name,
             },
-            ...(p.type.name === "boolean" &&
-                !p.defaultValue && { default: "false" }),
+            ...(p.type.name === "boolean" && !p.defaultValue && { default: "false" }),
             ...(p.type.name === "boolean" && { type: p.type.name }),
             description: p.description,
-          };
+          }
         }),
-      });
+      })
     }
 
     /**
@@ -59,6 +55,6 @@ getDocComponents().then((docs) => {
           tags: webTypesJson,
         },
       },
-    });
-  });
-});
+    })
+  })
+})
