@@ -1,10 +1,10 @@
 <template>
-  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : '' " min-width="500">
+  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : ''" min-width="500">
     <v-card-title>
       <component :is="displayMode === 'page' ? 'h2' : 'h3'">{{ title }}</component>
       <v-spacer />
-      <ListButton :resource="resource" v-if="displayMode === 'page' " outlined />
-      <v-btn v-else-if="displayMode === 'dialog' " icon  @click="onClickClose" >
+      <ListButton :resource="resource" v-if="displayMode === 'page'" outlined />
+      <v-btn v-else-if="displayMode === 'dialog'" icon @click="onClickClose">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
@@ -22,13 +22,13 @@ import ListButton from "./buttons/RetrieveButton"
 import ResetButton from "./buttons/ResetButton"
 
 export default {
-  components: {ResetButton, ListButton, SaveButton, Form},
+  components: { ResetButton, ListButton, SaveButton, Form },
   props: {
     title: String,
     resource: String,
     displayMode: {
       type: String,
-      validator: (v) => ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
     },
   },
@@ -40,6 +40,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

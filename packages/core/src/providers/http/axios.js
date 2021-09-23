@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios"
 
 const defaultErrorHandler = (error, store, router) => {
   let errMsg = null
@@ -11,11 +11,15 @@ const defaultErrorHandler = (error, store, router) => {
 
     // 401 to login
     if (error.response.status === 401) {
-      router.push({
-        name: "login"
-      }, null, null)
+      router.push(
+        {
+          name: "login",
+        },
+        null,
+        null
+      )
     }
-  } else if(error && error.message) {
+  } else if (error && error.message) {
     store.dispatch("app/errorMsg", error.message)
   }
 
@@ -33,7 +37,7 @@ const successAlert = (response, store) => {
 }
 
 class AxiosHttp {
-  constructor ({ overrideOptions, store, router,}) {
+  constructor({ overrideOptions, store, router }) {
     this.queue = {}
 
     this.store = store
@@ -41,46 +45,54 @@ class AxiosHttp {
 
     return this.create(overrideOptions)
   }
-  getInsideConfig () {
+  getInsideConfig() {
     return {
       authenticated: true,
       errorHandler: (error) => defaultErrorHandler(error, this.store, this.router),
     }
   }
-  destroy (url) {
+  destroy(url) {
     delete this.queue[url]
     if (!Object.keys(this.queue).length) {
-      setTimeout(() => {this.store.dispatch('app/loaded')}, 500)
+      setTimeout(() => {
+        this.store.dispatch("app/loaded")
+      }, 500)
     }
   }
-  interceptors (instance) {
-    instance.interceptors.request.use(config => {
-      if (!Object.keys(this.queue).length) {
-        this.store.dispatch("app/loading")
-      }
-      this.queue[config.url] = true
+  interceptors(instance) {
+    instance.interceptors.request.use(
+      (config) => {
+        if (!Object.keys(this.queue).length) {
+          this.store.dispatch("app/loading")
+        }
+        this.queue[config.url] = true
 
-      return config
-    }, error => {
-      let errorHandler = error.config.errorHandler || null
-      return Promise.reject(errorHandler ? errorHandler(error) : error)
-    })
+        return config
+      },
+      (error) => {
+        let errorHandler = error.config.errorHandler || null
+        return Promise.reject(errorHandler ? errorHandler(error) : error)
+      }
+    )
 
     // 响应拦截
-    instance.interceptors.response.use(resp => {
-      this.destroy(resp.config.url)
+    instance.interceptors.response.use(
+      (resp) => {
+        this.destroy(resp.config.url)
 
-      new Promise(() => {
-        successAlert(resp, this.store)
-      }).then(() => {});
+        new Promise(() => {
+          successAlert(resp, this.store)
+        }).then(() => {})
 
-      return resp
-    }, error => {
-      this.destroy(error.config.url)
+        return resp
+      },
+      (error) => {
+        this.destroy(error.config.url)
 
-      let errorHandler = error.config.errorHandler || null
-      return Promise.reject(errorHandler ? errorHandler(error) : error)
-    })
+        let errorHandler = error.config.errorHandler || null
+        return Promise.reject(errorHandler ? errorHandler(error) : error)
+      }
+    )
   }
   create(options) {
     let finalOptions = Object.assign({}, this.getInsideConfig(), options)

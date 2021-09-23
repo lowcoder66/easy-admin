@@ -1,11 +1,11 @@
 <template>
   <ActionButton
-      v-bind="$attrs"
-      :resource="resource"
-      :btn-icon="btnIcon || false"
-      :color="color || 'default'"
-      :label="label || defaultLabel"
-      @click="onClick"
+    v-bind="$attrs"
+    :resource="resource"
+    :btn-icon="btnIcon || false"
+    :color="color || 'default'"
+    :label="label || defaultLabel"
+    @click="onClick"
   />
 </template>
 
@@ -14,14 +14,14 @@ import Button from "../../../mixins/button"
 import ActionButton from "./ActionButton"
 
 export default {
-  components: {ActionButton},
+  components: { ActionButton },
   mixins: [Button],
   inject: {
     formState: { default: undefined },
   },
   computed: {
     defaultLabel() {
-      return this.$t("em.actions.reset");
+      return this.$t("em.actions.reset")
     },
   },
   methods: {
@@ -31,5 +31,5 @@ export default {
       }
     },
   },
-};
+}
 </script>

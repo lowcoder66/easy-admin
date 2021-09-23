@@ -1,31 +1,24 @@
 <template>
-  <ActionWrapper
-      :title="title"
+  <ActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
+    <Form
+      :value="newItem"
       :resource="resource.name"
-      :display-mode="displayMode"
-      @cancel="onCancelAction"
-  >
-    <Form :value="newItem"
-          :resource="resource.name"
-          @saved="handleFormSaved"
-          :redirect="displayMode === 'page' ? 'retrieve' : false">
+      @saved="handleFormSaved"
+      :redirect="displayMode === 'page' ? 'retrieve' : false"
+    >
       <ea-text-input required source="name" />
       <template v-if="item">
-        <ea-select-input source="parent"
-                         model="parentId"
-                         :items="[item]"
-                         item-text="name"
-                         item-value="id"
-                         readonly
-        />
+        <ea-select-input source="parent" model="parentId" :items="[item]" item-text="name" item-value="id" readonly />
       </template>
       <template v-else>
-        <ea-select-input source="parent"
-                         model="parentId"
-                         reference="departments"
-                         item-text="name"
-                         item-value="id"
-                         :fetch-filter="{all: true}" />
+        <ea-select-input
+          source="parent"
+          model="parentId"
+          reference="departments"
+          item-text="name"
+          item-value="id"
+          :fetch-filter="{ all: true }"
+        />
       </template>
     </Form>
   </ActionWrapper>
@@ -43,20 +36,19 @@ export default {
 
     displayMode: {
       type: String,
-      validator: (v) => ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
-    }
+    },
   },
-  components: {ActionWrapper, Form},
+  components: { ActionWrapper, Form },
   data() {
     return {
       newItem: {
         parent: this.item && this.item.id,
       },
-    };
+    }
   },
-  async created() {
-  },
+  async created() {},
   methods: {
     handleFormSaved(data) {
       this.$emit("saved", data)
@@ -68,6 +60,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

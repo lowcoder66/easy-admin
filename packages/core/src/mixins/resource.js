@@ -15,10 +15,10 @@ export default {
   },
   computed: {
     currentResource() {
-      return this["$admin"].getResource(this.resource);
+      return this["$admin"].getResource(this.resource)
     },
     currentAction() {
-      return this["$admin"].getAction(this.resource, this.action);
+      return this["$admin"].getAction(this.resource, this.action)
     },
   },
 }

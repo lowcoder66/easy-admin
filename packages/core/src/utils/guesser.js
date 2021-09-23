@@ -4,13 +4,13 @@
 let guessFields = async (store, i18n, resource) => {
   let { data } = await store.dispatch(`${resource}/getList`, {
     pagination: { page: 1, perPage: 1 },
-  });
+  })
 
   if (!data.length) {
-    return [];
+    return []
   }
 
-  let item = data[0];
+  let item = data[0]
 
   const supportedFields = [
     { type: "boolean", validator: (v) => typeof v === "boolean" },
@@ -20,58 +20,57 @@ let guessFields = async (store, i18n, resource) => {
       type: "url",
       validator: (v) => {
         try {
-          new URL(v);
+          new URL(v)
         } catch (e) {
-          return false;
+          return false
         }
 
-        return true;
+        return true
       },
     },
     {
       type: "date",
       validator: (v) => {
-        return isNaN(v) && !isNaN(Date.parse(v));
+        return isNaN(v) && !isNaN(Date.parse(v))
       },
     },
     { type: "text", validator: (v) => typeof v === "string" },
-  ];
+  ]
 
   return Object.keys(item)
     .map((prop) => {
       if (i18n.te(`resources.${resource}.enums.${prop}`)) {
-        return { source: prop, type: "select" };
+        return { source: prop, type: "select" }
       }
       for (let t of supportedFields) {
         if (t.validator(item[prop])) {
-          return { source: prop, type: t.type };
+          return { source: prop, type: t.type }
         }
       }
-      return false;
+      return false
     })
-    .filter((t) => t && t.source !== "id");
-};
+    .filter((t) => t && t.source !== "id")
+}
 
 let guessInputs = async (store, i18n, resource) => {
-  let fields = await guessFields(store, i18n, resource);
+  let fields = await guessFields(store, i18n, resource)
 
-  return fields.map(f => {
+  return fields.map((f) => {
     if (["email", "url"].includes(f.type)) {
-      f.type = "text";
+      f.type = "text"
     }
 
-    return f;
-  });
-};
+    return f
+  })
+}
 let guessInputsByFields = async (fields) => {
-
-  return fields.map(f => {
+  return fields.map((f) => {
     if (["email", "url"].includes(f.type)) {
-      f.type = "text";
+      f.type = "text"
     }
 
-    return f;
-  });
-};
+    return f
+  })
+}
 
-export { guessFields, guessInputs, guessInputsByFields };
+export { guessFields, guessInputs, guessInputsByFields }

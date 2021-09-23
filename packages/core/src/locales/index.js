@@ -1,3 +1,3 @@
-import zh from "./zh.json";
+import zh from "./zh.json"
 
-export { zh, };
+export { zh }

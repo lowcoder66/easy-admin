@@ -1,11 +1,11 @@
 <template>
   <ActionButton
-      v-bind="$attrs"
-      :resource="resource"
-      :btn-icon="btnIcon || 'mdi-view-list'"
-      :color="color || 'info'"
-      :label="label"
-      :action-key="actionKey"
+    v-bind="$attrs"
+    :resource="resource"
+    :btn-icon="btnIcon || 'mdi-view-list'"
+    :color="color || 'info'"
+    :label="label"
+    :action-key="actionKey"
   />
 </template>
 
@@ -15,7 +15,7 @@ import Button from "../../../mixins/button"
 
 export default {
   mixins: [Button],
-  components: {ActionButton},
+  components: { ActionButton },
   props: {
     action: {
       type: String,
@@ -29,6 +29,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

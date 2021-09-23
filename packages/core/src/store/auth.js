@@ -4,9 +4,10 @@ import {
   CHECK_AUTH,
   CHECK_ERROR,
   GET_NAME,
-  GET_EMAIL,
+  GET_USERNAME,
   GET_PERMISSIONS,
-} from "../providers/auth/actions";
+  GET_USER,
+} from "../providers/auth/actions"
 
 export default (provider, router) => {
   return {
@@ -14,25 +15,30 @@ export default (provider, router) => {
     state: { user: null },
     mutations: {
       setUser(state, user) {
-        state.user = user;
+        state.user = user
       },
     },
     getters: {
       [GET_NAME](state) {
         if (state.user && provider[GET_NAME]) {
-          return provider[GET_NAME](state.user);
+          return provider[GET_NAME](state.user)
         }
       },
-      [GET_EMAIL](state) {
-        if (state.user && provider[GET_EMAIL]) {
-          return provider[GET_EMAIL](state.user);
+      [GET_USERNAME](state) {
+        if (state.user && provider[GET_USERNAME]) {
+          return provider[GET_USERNAME](state.user)
         }
       },
       [GET_PERMISSIONS](state) {
         if (state.user && provider[GET_PERMISSIONS]) {
-          return provider[GET_PERMISSIONS](state.user) || [];
+          return provider[GET_PERMISSIONS](state.user) || []
         }
-        return [];
+        return []
+      },
+      [GET_USER](state) {
+        if (state.user && provider[GET_USER]) {
+          return provider[GET_USER](state.user)
+        }
       },
     },
     actions: {
@@ -41,15 +47,15 @@ export default (provider, router) => {
        * checkAuth action will set fresh user infos on store automatically
        */
       [LOGIN]: async (context, credentials) => {
-        await provider[LOGIN](credentials);
-        router.push({ name: "index" });
+        await provider[LOGIN](credentials)
+        router.push({ name: "index" })
       },
       /**
        * Explicit logout action, remove user from storage
        */
       [LOGOUT]: async () => {
-        await provider[LOGOUT]();
-        router.push({ name: "login" });
+        await provider[LOGOUT]()
+        router.push({ name: "login" })
       },
       /**
        * Check valid auth on target route server by retrieving user infos
@@ -59,12 +65,12 @@ export default (provider, router) => {
       [CHECK_AUTH]: async ({ commit, state }) => {
         if (!state.user) {
           try {
-            let response = await provider[CHECK_AUTH]();
+            let response = await provider[CHECK_AUTH]()
             if (response) {
-              commit("setUser", response.data);
+              commit("setUser", response.data)
             }
           } catch (e) {
-            commit("setUser", null);
+            commit("setUser", null)
           }
         }
         return state.user
@@ -76,11 +82,11 @@ export default (provider, router) => {
        */
       [CHECK_ERROR]: async ({ dispatch }, error) => {
         try {
-          await provider[CHECK_ERROR](error);
+          await provider[CHECK_ERROR](error)
         } catch (e) {
-          dispatch("logout");
+          dispatch("logout")
         }
       },
     },
-  };
-};
+  }
+}

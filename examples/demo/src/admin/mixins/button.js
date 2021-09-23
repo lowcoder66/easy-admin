@@ -5,9 +5,9 @@ export default {
   props: {
     btnIcon: {
       type: [Boolean, String],
-      default () {
+      default() {
         return false
-      }
+      },
     },
     color: {
       type: String,
@@ -20,13 +20,13 @@ export default {
     },
     displayMode: {
       type: String,
-      validator: (v) => v && ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => v && ["page", "dialog", "drawer"].includes(v),
       default: null,
     },
   },
   methods: {
     onClick(item) {
       this.$emit("click", item)
-    }
+    },
   },
 }

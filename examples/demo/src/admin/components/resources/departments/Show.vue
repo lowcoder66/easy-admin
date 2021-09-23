@@ -1,24 +1,15 @@
 <template>
-  <ActionWrapper
-      :title="title"
+  <ActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
+    <Form
+      readonly
+      :id="id"
+      :value="newItem"
       :resource="resource.name"
-      :display-mode="displayMode"
-      @cancel="onCancelAction"
-  >
-    <Form readonly
-          :id="id"
-          :value="newItem"
-          :resource="resource.name"
-          @saved="handleFormSaved"
-          :redirect="displayMode === 'page' ? 'retrieve' : false">
+      @saved="handleFormSaved"
+      :redirect="displayMode === 'page' ? 'retrieve' : false"
+    >
       <ea-text-input required source="name" />
-      <ea-select-input source="parent"
-                       model="parentId"
-                       :items="[newItem]"
-                       item-text="name"
-                       item-value="id"
-                       readonly
-      />
+      <ea-select-input source="parent" model="parentId" :items="[newItem]" item-text="name" item-value="id" readonly />
     </Form>
   </ActionWrapper>
 </template>
@@ -33,26 +24,24 @@ export default {
     resource: Object,
     item: Object,
     id: {
-      type: [String, Number]
+      type: [String, Number],
     },
     displayMode: {
       type: String,
-      validator: (v) => ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
     },
   },
-  components: {ActionWrapper, Form},
+  components: { ActionWrapper, Form },
   data() {
     return {
       newItem: {
         ...this.item,
         parent: this.item && this.item.parentId,
       },
-    };
+    }
   },
-  async created() {
-
-  },
+  async created() {},
   methods: {
     handleFormSaved(data) {
       this.$emit("saved", data)
@@ -64,6 +53,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

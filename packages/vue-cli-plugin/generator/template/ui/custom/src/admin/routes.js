@@ -1,4 +1,4 @@
-import ManagementLayout from "./layouts/Management"
+import ManagementLayout from "./layouts/Admin"
 import BasicLayout from "./layouts/Basic"
 <%_ if (authProvider) { _%>
 import Login from "./components/auth/Login"

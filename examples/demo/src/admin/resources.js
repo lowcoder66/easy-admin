@@ -26,6 +26,6 @@ export default [
   {
     name: "dispatches",
     icon: "mdi-gift",
-    actions: ["add", "list=simple", "list", ],
+    actions: ["add", "list=simple", "list"],
   },
-];
+]

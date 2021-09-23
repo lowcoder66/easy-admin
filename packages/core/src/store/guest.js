@@ -1,26 +1,20 @@
-import {
-  CHECK_AUTH,
-  CHECK_ERROR,
-  GET_NAME,
-  GET_EMAIL,
-  GET_PERMISSIONS,
-} from "../providers/auth/actions";
+import { CHECK_AUTH, CHECK_ERROR, GET_NAME, GET_USERNAME, GET_PERMISSIONS } from "../providers/auth/actions"
 
 export default {
   namespaced: true,
   getters: {
     [GET_NAME]() {
-      return null;
+      return null
     },
-    [GET_EMAIL]() {
-      return null;
+    [GET_USERNAME]() {
+      return null
     },
     [GET_PERMISSIONS]() {
-      return [];
+      return []
     },
   },
   actions: {
     [CHECK_AUTH]: () => Promise.resolve(true),
     [CHECK_ERROR]: () => {},
   },
-};
+}

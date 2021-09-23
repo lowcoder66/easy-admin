@@ -7,7 +7,7 @@
       <v-list slot="prepend" class="py-1">
         <v-list-item class="px-4">
           <v-list-item-avatar tile>
-            <img alt="app-logo" src="@/assets/logo.svg" width="80" height="80"/>
+            <v-img max-height="80" max-width="80" src="@/assets/logo.svg"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
@@ -20,11 +20,13 @@
       <div>
         <v-list nav>
           <v-list-item-group color="primary" mandatory>
-            <template v-for="(item, index) in navs" >
+            <template v-for="(item, index) in navs">
               <!-- 分割线或者文字 -->
               <template v-if="item.divider">
-                <v-divider v-if="item.divider === 'line'" :key="index" class="pa-1 mt-2 "></v-divider>
-                <div v-else-if="item.divider === 'text'" :key="index" class="pa-1 mt-2 overline">{{ item.content }}</div>
+                <v-divider v-if="item.divider === 'line'" :key="index" class="pa-1 mt-2"></v-divider>
+                <div v-else-if="item.divider === 'text'" :key="index" class="pa-1 mt-2 overline">
+                  {{ item.content }}
+                </div>
               </template>
 
               <!-- 有子菜单 -->
@@ -38,7 +40,13 @@
                       </div>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content class="align-center">
-                      <v-list-item dense color="primary" v-for="(c, i) in item.children" :key="`${index}_${i}`" :to="c.link">
+                      <v-list-item
+                        dense
+                        color="primary"
+                        v-for="(c, i) in item.children"
+                        :key="`${index}_${i}`"
+                        :to="c.link"
+                      >
                         <v-list-item-icon>
                           <v-icon v-text="c.icon"></v-icon>
                         </v-list-item-icon>
@@ -63,13 +71,35 @@
             </template>
           </v-list-item-group>
         </v-list>
-
       </div>
     </v-navigation-drawer>
 
     <v-app-bar app>
       <v-app-bar-nav-icon @click="handleClickNavIcon"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
+
+      <v-menu bottom offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on" class="mr-2">
+            <v-avatar size="30" color="primary">
+              <span class="white--text text-h6">{{ (user.name || "?").substr(0, 1) }}</span>
+            </v-avatar>
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-list-item-content class="justify-center">
+            <div class="mx-auto text-center pa-2">
+              <h3>{{ user.name }}</h3>
+              <p class="caption mt-1">
+                {{ user.email }}
+              </p>
+              <v-divider class="my-2"></v-divider>
+              <v-btn block color="error darken-1" text @click="logout">退出登录</v-btn>
+            </div>
+          </v-list-item-content>
+        </v-card>
+      </v-menu>
     </v-app-bar>
 
     <v-main>
@@ -77,7 +107,7 @@
         <v-breadcrumbs class="pt-0 pb-4 px-0" :items="breadcrumbs">
           <template v-slot:item="{ item }">
             <v-breadcrumbs-item :href="item.href" :to="item.to" :disabled="item.disabled">
-              <v-icon size="14" class="mr-2" >{{ item.icon }}</v-icon>
+              <v-icon size="14" class="mr-2">{{ item.icon }}</v-icon>
               <span>{{ item.text }}</span>
             </v-breadcrumbs-item>
           </template>
@@ -86,53 +116,55 @@
         <router-view />
       </v-container>
     </v-main>
-
   </v-app>
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex"
+import { mapActions, mapMutations, mapState } from "vuex"
 import navigations from "../../admin/navigations"
 import Loading from "./Loading"
 import Messages from "./Messages"
 
 export default {
-  components: {Loading, Messages},
+  components: { Loading, Messages },
   data: () => ({
     breadcrumbs: [],
   }),
   watch: {
-    '$route'(val) {
+    $route(val) {
       this.buildBreadcrumbs(val)
-    }
+    },
   },
   created() {
     this.buildBreadcrumbs(this.$route)
   },
   computed: {
     title() {
-      return "Title"
+      return this.$admin.options.title
     },
-    ...mapState('app', {
+    ...mapState("app", {
       navDrawer: "navDrawer",
+    }),
+    ...mapState("auth", {
+      user: "user",
     }),
     showNavDrawer: {
       get() {
-        return this.navDrawer;
+        return this.navDrawer
       },
       set(value) {
         this.setNavDrawer(value)
-      }
+      },
     },
     navs() {
       return navigations(this.$i18n, this.$admin)
     },
     indexBreadcrumb() {
       let r = this.$router.match("/")
-      let b =  {
-        to: '/',
-        text: '首页',
-        icon: 'mdi-view-dashboard-outline',
+      let b = {
+        to: "/",
+        text: "首页",
+        icon: "mdi-view-dashboard-outline",
         disabled: false,
       }
       if (r) {
@@ -141,10 +173,11 @@ export default {
       }
 
       return b
-    }
+    },
   },
   methods: {
-    ...mapMutations('app', ["setNavDrawer"]),
+    ...mapMutations("app", ["setNavDrawer"]),
+    ...mapActions("auth", ["logout"]),
     handleClickNavIcon() {
       this.setNavDrawer(!this.navDrawer)
     },
@@ -162,10 +195,10 @@ export default {
       return {
         text: (route.meta && route.meta.title) || route.name,
         to: route.path,
-        icon: (route.meta && route.meta.icon) || 'mdi-menu-open',
+        icon: (route.meta && route.meta.icon) || "mdi-menu-open",
         disabled: false,
       }
-    }
+    },
   },
 }
 </script>

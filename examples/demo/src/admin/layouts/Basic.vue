@@ -16,10 +16,8 @@ import Loading from "./Loading"
 import Messages from "./Messages"
 
 export default {
-  components: {Loading, Messages}
+  components: { Loading, Messages },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

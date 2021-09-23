@@ -17,23 +17,21 @@ export default {
     enums: {
       type: Array,
       default() {
-        let enumKey = `enums.${this.source}`;
+        let enumKey = `enums.${this.source}`
         if (!this.$te(enumKey)) {
-          return [];
+          return []
         }
 
-        let enums = this.$t(enumKey);
+        let enums = this.$t(enumKey)
 
         return Object.keys(enums).map((key) => {
           return {
             value: key,
             text: enums[key],
-          };
-        });
+          }
+        })
       },
     },
   },
-  methods: {
-
-  },
-};
+  methods: {},
+}

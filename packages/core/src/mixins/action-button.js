@@ -8,7 +8,7 @@ export default {
     },
     displayMode: {
       type: String,
-      validator: (v) =>  v && ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => v && ["page", "dialog", "drawer"].includes(v),
       default: null,
     },
     label: {
@@ -33,13 +33,13 @@ export default {
     },
     actionRoute() {
       const action = this.currentAction
-      if (action && this.actionDisplayMode === 'page') {
+      if (action && this.actionDisplayMode === "page") {
         return {
           name: `${this.resource}_${action.name}`,
           params: {
             id: this.id || this.item ? this.item.id : null,
           },
-        };
+        }
       }
       return null
     },
@@ -47,6 +47,6 @@ export default {
   methods: {
     onClick() {
       this.$emit("click", this.item)
-    }
+    },
   },
 }

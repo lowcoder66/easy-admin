@@ -1,17 +1,15 @@
 <template>
-  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : '' " >
+  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : ''">
     <v-card-title>
       <component :is="displayMode === 'page' ? 'h2' : 'h3'">{{ title }}</component>
       <v-spacer />
-      <ListButton v-if="displayMode === 'page' " outlined />
-      <v-btn v-else-if="displayMode === 'dialog' " icon large @click="onClickClose" >
+      <ListButton v-if="displayMode === 'page'" outlined />
+      <v-btn v-else-if="displayMode === 'dialog'" icon large @click="onClickClose">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <Form :item="item"
-            @saved="handleFormSaved"
-            :redirect="displayMode === 'page' ? 'retrieve' : false">
+      <Form :item="item" @saved="handleFormSaved" :redirect="displayMode === 'page' ? 'retrieve' : false">
         <ea-text-input source="name"></ea-text-input>
         <ea-text-input source="code"></ea-text-input>
         <ea-text-input source="description" multiline></ea-text-input>
@@ -22,7 +20,7 @@
 
 <script>
 import Form from "../../ui/Form"
-import {guessInputs} from "@lowcoder/easy-admin/src/utils/guesser"
+import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
 import SaveButton from "../../ui/buttons/SaveButton"
 import ListButton from "../../ui/buttons/RetrieveButton"
 import ResetButton from "../../ui/buttons/ResetButton"
@@ -35,22 +33,18 @@ export default {
 
     displayMode: {
       type: String,
-      validator: (v) => ["page", "dialog", "drawer", ].includes(v),
+      validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
-    }
+    },
   },
-  components: {ResetButton, ListButton, SaveButton, Form},
+  components: { ResetButton, ListButton, SaveButton, Form },
   data() {
     return {
       inputs: [],
-    };
+    }
   },
   async created() {
-    this.inputs = await guessInputs(
-        this.$store,
-        this.$i18n,
-        this.resource.name
-    );
+    this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
   },
   methods: {
     handleFormSaved(data) {
@@ -63,6 +57,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

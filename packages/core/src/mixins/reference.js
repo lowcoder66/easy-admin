@@ -1,31 +1,31 @@
 export default {
-    data() {
-        return {
-            loading: false,
-        }
+  data() {
+    return {
+      loading: false,
+    }
+  },
+  props: {
+    reference: String,
+    fetchFilter: {
+      type: Object,
+      default() {
+        return {}
+      },
     },
-    props: {
-        reference: String,
-        fetchFilter: {
-            type: Object,
-            default() {
-                return {}
-            }
-        }
-    },
-    methods: {
-        async fetchReferenceItems() {
-            if (!this.reference || this.loading) {
-                return;
-            }
-            this.loading = true;
+  },
+  methods: {
+    async fetchReferenceItems() {
+      if (!this.reference || this.loading) {
+        return
+      }
+      this.loading = true
 
-            let { data } = await this.$store.dispatch(`${this.reference}/getList`, {
-                filter: this.fetchFilter,
-            });
+      let { data } = await this.$store.dispatch(`${this.reference}/getList`, {
+        filter: this.fetchFilter,
+      })
 
-            this.loading = false;
-            return data;
-        },
+      this.loading = false
+      return data
     },
-};
+  },
+}

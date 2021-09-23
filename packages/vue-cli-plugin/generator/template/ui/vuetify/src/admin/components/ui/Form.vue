@@ -117,7 +117,7 @@ export default {
     },
     afterSave(itemId) {
       if (this.redirect) {
-        const toAction = this.currentResource.action.find(pa => pa.key === this.redirect)
+        const toAction = this.currentResource.actions.find(pa => pa.key === this.redirect)
         let actionLink = this['$admin'].getActionLink(this.resource, toAction) || "index"
 
         switch (this.redirect) {
