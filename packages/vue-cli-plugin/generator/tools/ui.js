@@ -1,20 +1,40 @@
+const fs = require("fs")
+
 function invokeDependency(api, options) {
-  const { ui, authProvider } = options
+  const { ui } = options
   const vueCmd = `vue${process.platform === "win32" ? ".cmd" : ""}`
+
   switch (ui) {
     case "vuetify":
       require("child_process").spawnSync(vueCmd, ["invoke", "vue-cli-plugin-vuetify", "--preset", "default"], {
         stdio: "inherit",
         cwd: process.cwd(),
       })
+
+      afterInvokeVuetify(api)
       break
     case "custom":
-      api.render("../template/ui/custom", {
-        authProvider,
-      })
       break
   }
 }
+
+function afterInvokeVuetify(api) {
+  // modify the src/App.vue
+  const app = api.resolve("src/App.vue")
+  let appContent = ""
+
+  if (fs.existsSync(app)) {
+    appContent = fs.readFileSync(app, { encoding: "utf8" })
+  }
+  // replace `<template>` content to `<router-view />`
+  appContent = appContent.replace(
+    new RegExp(/<template>.*<\/template>/gs),
+    "<template>\n  <router-view />\n</template>"
+  )
+
+  fs.writeFileSync(app, appContent, { encoding: "utf8" })
+}
+
 function render(api, options) {
   const { ui, authProvider } = options
   switch (ui) {

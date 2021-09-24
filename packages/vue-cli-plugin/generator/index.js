@@ -11,13 +11,14 @@ module.exports = (api, options) => {
   // vue config
   admin.addVueConfig(api)
 
-  // invoke dependency ui framework
-  admin.invokeDependency(api, options)
-
   // process templates
   admin.processTemplates(api, options)
 
   api.onCreateComplete(() => {
+    // invoke dependency ui framework
+    admin.invokeDependency(api, options)
+
+    // clean files
     ;[
       "src/assets/logo.png",
       "src/components/HelloWorld.vue",
