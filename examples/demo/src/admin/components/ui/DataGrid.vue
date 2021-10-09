@@ -7,8 +7,8 @@
     :headers="headers"
     :items="items"
     :server-items-length="totalItems"
-    @update:page="handlePageUpdate"
-    @update:items-per-page="handleItemsPerPageUpdate"
+    :multi-sort="multiSort"
+    @update:options="handleOptionsUpdate"
   >
     <!-- 表头 -->
     <template v-slot:top>
@@ -48,10 +48,11 @@
       </v-toolbar>
     </template>
 
-    <!-- 自定义列渲染 -->
+    <!-- 操作列 -->
     <template v-slot:item.actions="{ item }">
-      <div class="data-table-column-actions">
+      <div class="data-table-row-actions">
         <ShowButton
+          v-if="showItemAction(item, 'show')"
           small
           outlined
           :btn-label="$i18n.t('em.actions.show')"
@@ -60,6 +61,7 @@
           :item="item"
         />
         <UpdateButton
+          v-if="showItemAction(item, 'update')"
           small
           outlined
           :btn-label="$i18n.t('em.actions.update')"
@@ -69,6 +71,7 @@
           @action-completed="fetchData"
         />
         <DeleteButton
+          v-if="showItemAction(item, 'delete')"
           small
           outlined
           :btn-label="$i18n.t('em.actions.delete')"
@@ -79,20 +82,31 @@
         />
       </div>
     </template>
+    <!-- 根据字段类型渲染 -->
+    <template v-for="field in tableFields" v-slot:[`item.${field.source}`]="{ item, value }">
+      <slot :name="`field.${field.source}`" v-bind="{ item, value }">
+        <ea-field v-if="field.type" :type="field.type" :value="value" />
+        <template v-else>{{ value }}</template>
+      </slot>
+    </template>
   </v-data-table>
 </template>
 
 <script>
 import Resource from "@lowcoder/easy-admin/src/mixins/resource"
-import CreateButton from "@/admin/components/ui/buttons/CreateButton"
-import UpdateButton from "@/admin/components/ui/buttons/UpdateButton"
-import ShowButton from "@/admin/components/ui/buttons/ShowButton"
-import DeleteButton from "@/admin/components/ui/buttons/DeleteButton"
+import CreateButton from "./buttons/CreateButton"
+import UpdateButton from "./buttons/UpdateButton"
+import ShowButton from "./buttons/ShowButton"
+import DeleteButton from "./buttons/DeleteButton"
 
 export default {
   components: { DeleteButton, ShowButton, UpdateButton, CreateButton },
   mixins: [Resource],
   props: {
+    multiSort: {
+      type: Boolean,
+      default: true,
+    },
     title: {
       type: String,
       default: "List",
@@ -106,6 +120,12 @@ export default {
       default: () => {},
     },
     disableColumnActions: Boolean,
+    showItemAction: {
+      type: Function,
+      default: function (item, action) {
+        return item && this.$admin.hasActionPermission(this.resource, action)
+      },
+    },
   },
   data() {
     return {
@@ -169,12 +189,22 @@ export default {
       }
       return "left"
     },
-    handlePageUpdate(page) {
+    handleOptionsUpdate({ sortBy, sortDesc, page, itemsPerPage }) {
+      // sort
+      let sortParams = []
+      let sortFields = sortBy instanceof Array ? sortBy : [sortBy]
+      let descArray = sortDesc instanceof Array ? sortDesc : [sortDesc]
+      for (let i in sortFields) {
+        sortParams.push({
+          by: sortFields[i],
+          desc: descArray[i] || false,
+        })
+      }
+      this.listParams.sort = sortParams
+
+      // page
       this.listParams.pagination.page = page
-      this.fetchData()
-    },
-    handleItemsPerPageUpdate(perPage) {
-      this.listParams.pagination.perPage = perPage
+      this.listParams.pagination.perPage = itemsPerPage
       this.fetchData()
     },
     async fetchData() {
@@ -208,7 +238,7 @@ export default {
 <style scoped lang="sass">
 @import '~vuetify/src/styles/styles.sass'
 
-.data-table-column-actions
+.data-table-row-actions
   ::v-deep button,a
     &:not(a:last-of-type)
       margin-right: $spacer

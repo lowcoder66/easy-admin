@@ -85,13 +85,13 @@ export default {
     confirmTitle() {
       return this.$t("em.confirm.delete_title", {
         resource: this["$admin"].getResourceLabel(this.currentResource, 10),
-        id: this.item.id,
+        label: this["$admin"].getResourceItemLabel(this.currentResource, this.item),
       })
     },
     confirmMessage() {
       return this.$t("em.confirm.delete_message", {
         resource: this["$admin"].getResourceLabel(this.currentResource, 10),
-        id: this.item.id,
+        label: this["$admin"].getResourceItemLabel(this.currentResource, this.item),
       })
     },
     actionLabel() {

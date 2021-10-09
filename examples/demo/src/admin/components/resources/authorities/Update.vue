@@ -2,16 +2,14 @@
   <EaActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
     <EaForm
       :value="item"
+      :id="id"
       :resource="resource.name"
       @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <component
-        v-for="input in inputs"
-        :key="input.source"
-        :source="input.source"
-        :is="`ea-${input.type}-input`"
-      ></component>
+      <EaTextInput source="code" required readonly />
+      <EaTextInput source="name" required />
+      <EaTextInput source="description" multiline />
     </EaForm>
   </EaActionWrapper>
 </template>
@@ -24,7 +22,9 @@ export default {
     title: String,
     resource: Object,
     item: Object,
-
+    id: {
+      type: [String, Number],
+    },
     displayMode: {
       type: String,
       validator: (v) => ["page", "dialog", "drawer"].includes(v),

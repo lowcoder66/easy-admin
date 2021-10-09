@@ -1,5 +1,11 @@
 <template>
-  <v-textarea v-if="multiline" v-bind="{ ...$attrs, ...commonProps }" @change="change" @input="update"></v-textarea>
+  <v-textarea
+    v-if="multiline"
+    :rows="rows"
+    v-bind="{ ...$attrs, ...commonProps }"
+    @change="change"
+    @input="update"
+  ></v-textarea>
   <v-text-field
     v-else
     v-bind="{ ...$attrs, ...commonProps }"
@@ -23,6 +29,10 @@ export default {
       default: "text",
     },
     multiline: Boolean,
+    rows: {
+      type: [String, Number],
+      default: 3,
+    },
   },
 }
 </script>

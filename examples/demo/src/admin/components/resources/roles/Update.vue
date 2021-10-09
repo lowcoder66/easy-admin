@@ -2,29 +2,28 @@
   <EaActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
     <EaForm
       :value="item"
+      :id="id"
       :resource="resource.name"
       @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <component
-        v-for="input in inputs"
-        :key="input.source"
-        :source="input.source"
-        :is="`ea-${input.type}-input`"
-      ></component>
+      <EaTextInput source="code" required readonly />
+      <EaTextInput source="name" required />
+      <EaTextInput source="description" multiline />
+      <EaTransferInput label="权限" model="authorities" reference="authorities" />
     </EaForm>
   </EaActionWrapper>
 </template>
 
 <script>
-import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
-
 export default {
   props: {
     title: String,
     resource: Object,
     item: Object,
-
+    id: {
+      type: [String, Number],
+    },
     displayMode: {
       type: String,
       validator: (v) => ["page", "dialog", "drawer"].includes(v),
@@ -32,12 +31,7 @@ export default {
     },
   },
   data() {
-    return {
-      inputs: [],
-    }
-  },
-  async created() {
-    this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
+    return {}
   },
   methods: {
     handleFormSaved(data) {

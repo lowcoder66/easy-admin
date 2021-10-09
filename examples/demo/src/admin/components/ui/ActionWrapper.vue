@@ -1,5 +1,5 @@
 <template>
-  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : ''" min-width="500">
+  <v-card class="align-self-center" :class="displayMode === 'page' ? 'pa-4' : ''">
     <v-card-title>
       <component :is="displayMode === 'page' ? 'h2' : 'h3'">{{ title }}</component>
       <v-spacer />

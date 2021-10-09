@@ -3,7 +3,7 @@
     v-if="showActionBtn && actionDisplayMode === 'dialog'"
     v-model="actionView"
     :persistent="currentAction.name !== 'show'"
-    max-width="550"
+    max-width="500"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn

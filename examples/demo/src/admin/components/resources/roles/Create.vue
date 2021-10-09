@@ -6,19 +6,15 @@
       @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <component
-        v-for="input in inputs"
-        :key="input.source"
-        :source="input.source"
-        :is="`ea-${input.type}-input`"
-      ></component>
+      <EaTextInput source="code" required />
+      <EaTextInput source="name" required />
+      <EaTextInput source="description" multiline />
+      <EaTransferInput label="权限" model="authorities" reference="authorities" />
     </EaForm>
   </EaActionWrapper>
 </template>
 
 <script>
-import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
-
 export default {
   props: {
     title: String,
@@ -32,12 +28,7 @@ export default {
     },
   },
   data() {
-    return {
-      inputs: [],
-    }
-  },
-  async created() {
-    this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
+    return {}
   },
   methods: {
     handleFormSaved(data) {
