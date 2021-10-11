@@ -23,6 +23,10 @@ export default {
     label: String,
     index: Number,
     readonly: Boolean,
+    hideHint: {
+      type: Boolean,
+      default: false,
+    },
     errorMessages: {
       type: Array,
       default: () => [],
@@ -81,14 +85,20 @@ export default {
     uniqueFormId() {
       return [this.parentSource, this.index, this.model || this.source].filter((s) => s !== undefined).join(".")
     },
+    readonlyInput() {
+      return this.readonly || (this.formState && this.formState.readonly)
+    },
+    readonlyHint() {
+      return this.readonlyInput && !this.hideHint ? this.$t("em.hints.readonly", { field: "*" }) : null
+    },
     commonProps() {
       return {
         label: this.inputLabel,
         value: this.input,
         rules: this.rules,
         errorMessages: [...this.errorMessages, ...this.internalErrorMessages],
-        readonly: this.readonly || this.formState.readonly,
-        hint: this.readonly || this.formState.readonly ? this.$t("em.hints.readonly", { field: "*" }) : null,
+        readonly: this.readonlyInput,
+        hint: this.readonlyHint,
       }
     },
   },

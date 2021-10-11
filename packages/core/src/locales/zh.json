@@ -32,8 +32,8 @@
   "confirm": {
     "yes": "是",
     "no": "否",
-    "delete_title": "确认删除 {resource}#{id} ?",
-    "delete_message": "正在删除 {resource}#{id}. 该操作是不可逆的 !",
+    "delete_title": "确认删除 {resource}#{label} ?",
+    "delete_message": "正在删除 {resource}#{label}. 该操作是不可逆的 !",
     "delete_many_title": "删除 {count} 项 {resource} ?",
     "delete_many_message": "正在删除 {count} 项 {resource}. 该操作是不可逆的 !",
     "dissociate_title": "从 {targetResource} 中分离 #{targetId} ?",
@@ -42,5 +42,11 @@
   "hints": {
     "readonly": "{field} 只读",
     "required": "{field} 必填"
+  },
+  "transfer": {
+    "label": "传输列表",
+    "filter_placeholder": "输入搜索内容",
+    "source_list": "源列表",
+    "target_list": "目的列表"
   }
 }

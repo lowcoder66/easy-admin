@@ -65,7 +65,8 @@ export default (httpClient) => {
         query = {
           ...query,
           page: page - 1,
-          size: perPage,
+          // ! 并不是真的显示全部条目，而是999条
+          size: perPage < 1 ? 999 : perPage,
         }
       }
 
@@ -86,18 +87,24 @@ export default (httpClient) => {
         return {
           data: data["content"],
           total: data["totalElements"],
+          lastPage: data["last"],
+          page: Number(data["number"] || 0) + 1,
         }
       } else if (data instanceof Array) {
         // common list, []
         return {
           data,
           total: data.length,
+          lastPage: true,
+          page: 1,
         }
       } else {
         console.warn("Incomprehensible format.")
         return {
           data: [],
           total: 0,
+          lastPage: true,
+          page: 1,
         }
       }
     },

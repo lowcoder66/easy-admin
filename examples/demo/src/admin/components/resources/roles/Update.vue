@@ -10,7 +10,7 @@
       <EaTextInput source="code" required readonly />
       <EaTextInput source="name" required />
       <EaTextInput source="description" multiline />
-      <EaTransferInput label="权限" model="authorities" reference="authorities" />
+      <EaTransferInput source="authorities" reference="authorities" />
     </EaForm>
   </EaActionWrapper>
 </template>

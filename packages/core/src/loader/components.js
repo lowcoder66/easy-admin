@@ -17,12 +17,12 @@ try {
   })
 
   // ui
-  const requireUIComponent = require.context("@/admin/components/ui/inputs", true, /\.vue$/)
+  const requireUIComponent = require.context("@/admin/components/ui", true, /\.vue$/)
   requireUIComponent.keys().forEach((fileName) => {
     const componentConfig = requireUIComponent(fileName)
 
     const componentName = fileName
-      .replace(/^\.\//, "")
+      .replace(/^\..*\//, "")
       .replace(/\//, "")
       .replace(/\.\w+$/, "")
 
@@ -38,7 +38,6 @@ try {
       .replace(/^\.\//, "")
       .replace(/\//, "")
       .replace(/\.\w+$/, "")
-
     Vue.component(upperFirst(camelCase(componentName)), componentConfig.default || componentConfig)
   })
 } catch (e) {

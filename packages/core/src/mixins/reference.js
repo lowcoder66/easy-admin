@@ -20,12 +20,26 @@ export default {
       }
       this.loading = true
 
-      let { data } = await this.$store.dispatch(`${this.reference}/getList`, {
-        filter: this.fetchFilter,
-      })
+      let allItems = []
+      let currentPage = 1
+      let fetchResult = await this.fetchPage(currentPage)
+      allItems = allItems.concat(fetchResult.data)
+      while (!fetchResult.lastPage) {
+        fetchResult = await this.fetchPage(++currentPage)
+        allItems = allItems.concat(fetchResult.data)
+      }
 
       this.loading = false
-      return data
+      return allItems
+    },
+    async fetchPage(currentPage) {
+      return await this.$store.dispatch(`${this.reference}/getList`, {
+        filter: this.fetchFilter,
+        pagination: {
+          page: currentPage,
+          perPage: 50,
+        },
+      })
     },
   },
 }

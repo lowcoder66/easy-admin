@@ -16,6 +16,18 @@ export default {
     },
     item: null,
     id: null,
+    useLatestItem: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      latestItem: null,
+    }
+  },
+  created() {
+    this.latestItem = this.item
   },
   computed: {
     actionDisplayMode() {
@@ -45,8 +57,19 @@ export default {
     },
   },
   methods: {
-    onClick() {
-      this.$emit("click", this.item)
+    async onClick() {
+      if (this.actionDisplayMode !== "page" && this.id && this.useLatestItem) {
+        try {
+          let { data } = await this.$admin.store.dispatch(`${this.resource}/getOne`, {
+            id: this.id,
+          })
+          this.latestItem = data
+        } catch ({ status, message }) {
+          console.warn(message)
+        }
+      }
+
+      this.$emit("click", this.latestItem)
     },
   },
 }

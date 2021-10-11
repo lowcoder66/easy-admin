@@ -17,13 +17,14 @@ import { zh } from "./locales"
 const defaultOptions = {
   title: "Easy Admin",
 
-  defaultActionDisplayMode: "page", // dialog drawer page
+  defaultActionDisplayMode: "dialog", // dialog drawer page
   defaultTreeActionDisplayMode: "dialog", // dialog drawer page
   defaultResourceIcon: "mdi-view-grid", //
   defaultHasPermission: true, // true false
   defaultActions: ["create", "delete", "update", "retrieve", "show"],
   enableOperateAction: true,
   defaultPerPage: 10,
+  defaultItemLabelKey: "name",
 }
 
 export default class EasyAdmin {
@@ -140,6 +141,20 @@ export default class EasyAdmin {
       let key = `resources.${resource}.fields.${field}`
       return i18n.te(key) ? i18n.t(key) : startCase(field.replace(".", " "))
     }
+    this.getResourceItemLabel = (resource, item) => {
+      let itemLabelKey = null,
+        resourceItemLabelFunc = this.getResource(resource)["itemLabel"]
+      if (resourceItemLabelFunc && typeof resourceItemLabelFunc === "function") {
+        itemLabelKey = resourceItemLabelFunc(item)
+      }
+
+      if (!itemLabelKey) {
+        let key = this.getResource(resource)["itemLabelKey"] || this.options.defaultItemLabelKey
+        itemLabelKey = Object.keys(item).indexOf(key) !== -1 ? item[key] : item["id"]
+      }
+
+      return itemLabelKey
+    }
     this.hasActionPermission = (resource, action) => hasActionPermission(resource, action, this)
 
     // store modules
@@ -181,26 +196,26 @@ export default class EasyAdmin {
        */
       document.title = to.meta.title ? `${to.meta.title} | ${this.options.title}` : this.options.title
 
-      /**
-       * Check and refresh authenticated user with last permissions
-       * after each navigation
-       */
-      let user = await store.dispatch("auth/checkAuth")
-      /**
-       * If logged
-       */
-      if (user) {
-        return next()
-      }
-
-      /**
-       * Force redirect to login if not logged for authenticated routes
-       */
       if (to.meta.authenticated) {
-        return next({ name: "login" })
-      }
+        /**
+         * Check and refresh authenticated user with last permissions
+         * after each navigation
+         */
+        let user = await store.dispatch("auth/checkAuth")
+        /**
+         * If logged
+         */
+        if (user) {
+          return next()
+        }
 
-      next()
+        /**
+         * Force redirect to login if not logged for authenticated routes
+         */
+        return next({ name: "login" })
+      } else {
+        next()
+      }
     })
   }
 }
