@@ -2,15 +2,36 @@ export default {
   data() {
     return {
       loading: false,
+      referenceData: [],
     }
   },
   props: {
     reference: String,
     fetchFilter: {
-      type: Object,
+      type: [Object, Function],
       default() {
         return {}
       },
+    },
+  },
+  computed: {
+    referenceFetchFilter() {
+      if (typeof this.fetchFilter === "function") {
+        return this.fetchFilter(this.formState ? this.formState.model : null)
+      } else {
+        return this.fetchFilter
+      }
+    },
+  },
+  async created() {
+    this.referenceData = await this.fetchReferenceItems()
+  },
+  watch: {
+    referenceFetchFilter: {
+      async handler() {
+        this.referenceData = await this.fetchReferenceItems()
+      },
+      immediate: true,
     },
   },
   methods: {
@@ -34,7 +55,7 @@ export default {
     },
     async fetchPage(currentPage) {
       return await this.$store.dispatch(`${this.reference}/getList`, {
-        filter: this.fetchFilter,
+        filter: this.referenceFetchFilter,
         pagination: {
           page: currentPage,
           perPage: 50,

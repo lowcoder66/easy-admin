@@ -4,14 +4,18 @@
       <v-col cols="12" md="3">
         <v-card>
           <v-card-text>
-            <DataTree :resource="treeResource || layout.treeResource" @update:active="onUpdateActive" />
+            <DataTree
+              :resource="treeResource || layout.treeResource"
+              @update:active="onUpdateActive"
+              :show-item-action="treeShowItemAction"
+            />
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="9">
         <v-card>
           <v-card-text>
-            <DataGrid :title="title" :fields="fields" :filter="listFilter" />
+            <DataGrid :title="title" :fields="fields" :filter="listFilter" :show-item-action="listShowItemAction" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -20,9 +24,9 @@
 </template>
 
 <script>
-import DataGrid from "@/admin/components/ui/DataGrid"
-import RetrieveLayout from "@/admin/mixins/retrieve-layout"
-import DataTree from "@/admin/components/ui/DataTree"
+import DataGrid from "../DataGrid"
+import RetrieveLayout from "../../../mixins/retrieve-layout"
+import DataTree from "../DataTree"
 
 export default {
   mixins: [RetrieveLayout],
@@ -33,6 +37,8 @@ export default {
       type: Object,
       default: () => {},
     },
+    treeShowItemAction: Function,
+    listShowItemAction: Function,
   },
   methods: {
     onUpdateActive(items) {

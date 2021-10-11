@@ -36,6 +36,6 @@ export default new EasyManage({
     authClient: process.env.VUE_APP_EM_AUTH_CLIENT_ID || "auth-client",
   }),
   options: {
-    defaultActionDisplayMode: "dialog", // dialog drawer page
+    defaultActionDisplayMode: "page", // dialog drawer page
   },
 })

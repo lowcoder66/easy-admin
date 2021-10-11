@@ -1,12 +1,12 @@
 <template>
   <v-select
     v-bind="{ ...$attrs, ...commonProps }"
+    chips
     :multiple="multiple"
     :item-text="itemText"
     :item-value="itemValue"
     :items="options || enums"
     :loading="loading"
-    :persistent-hint="!!commonProps.hint"
     @change="change"
     @input="update"
   >
@@ -23,8 +23,15 @@ export default {
   mixins: [Input, Multiple, Select, Reference],
   async created() {
     if (this.reference) {
-      this.options = await this.fetchReferenceItems()
+      this.options = this.referenceData
     }
+  },
+  watch: {
+    referenceData(val) {
+      if (val && this.reference) {
+        this.options = val
+      }
+    },
   },
 }
 </script>

@@ -9,7 +9,7 @@
       </v-btn>
     </v-card-title>
 
-    <v-card-text>
+    <v-card-text :style="displayMode === 'page' ? '' : `height: ${$vuetify.breakpoint.height * 0.7}px`">
       <slot></slot>
     </v-card-text>
   </v-card>

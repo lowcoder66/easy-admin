@@ -75,6 +75,7 @@ export default {
       type: String,
       default: "id",
     },
+    readonly: Boolean,
     items: {
       type: Array,
       default: () => [],

@@ -4,6 +4,7 @@
     <v-row no-gutters>
       <v-col cols="5">
         <EaTransferList
+          :readonly="readonlyInput"
           :label="sourceListLabel || $t('em.transfer.source_list')"
           :items="leftItems"
           title-key="code"
@@ -14,16 +15,17 @@
       </v-col>
       <v-col cols="2">
         <div class="fill-height pa-2 d-flex flex-column justify-center">
-          <v-btn small depressed class="mt-2" @click="handleClickRight">
+          <v-btn :disabled="readonlyInput" small depressed class="mt-2" @click="handleClickRight">
             <v-icon>mdi-transfer-right</v-icon>
           </v-btn>
-          <v-btn small depressed class="mt-2" @click="handleClickLeft">
+          <v-btn :disabled="readonlyInput" small depressed class="mt-2" @click="handleClickLeft">
             <v-icon>mdi-transfer-left</v-icon>
           </v-btn>
         </div>
       </v-col>
       <v-col cols="5">
         <EaTransferList
+          :readonly="readonlyInput"
           :label="sourceListLabel || $t('em.transfer.target_list')"
           :items="rightItems"
           title-key="code"
@@ -102,10 +104,17 @@ export default {
   },
   async created() {
     if (this.reference) {
-      this.listItems = await this.fetchReferenceItems()
+      this.listItems = this.referenceData
     } else if (this.items) {
       this.listItems = this.items
     }
+  },
+  watch: {
+    referenceData(val) {
+      if (val && this.reference) {
+        this.listItems = val
+      }
+    },
   },
 }
 </script>

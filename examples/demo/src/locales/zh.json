@@ -39,8 +39,13 @@
     "employees": {
       "name": "员工 | 员工",
       "fields": {
-        "name": "名称",
-        "phone": "手机"
+        "name": "姓名",
+        "phone": "手机",
+        "email": "邮箱",
+        "no": "工号",
+        "departments": "部门",
+        "roles": "角色",
+        "authorities": "权限"
       }
     },
     "positions": {

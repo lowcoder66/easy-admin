@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" @submit.prevent="onSubmit" :readonly="this.readonly">
+  <v-form ref="form" @submit.prevent="onSubmit">
     <slot></slot>
     <div v-if="!readonly" class="form-actions">
       <v-spacer></v-spacer>
@@ -72,6 +72,7 @@ export default {
       handler(val) {
         if (val) {
           this.formState.item = val
+          this.originalValue = val
         }
       },
       deep: true,
@@ -107,7 +108,7 @@ export default {
               data: this.formState.model,
             })
 
-        this.$refs.form.reset()
+        this.reset()
         this.$emit("saved", data)
 
         this.afterSave(data ? data.id : null)

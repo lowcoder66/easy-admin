@@ -16,18 +16,18 @@ export default {
     },
     item: null,
     id: null,
-    useLatestItem: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return {
-      latestItem: null,
+      latestItem: this.item,
     }
   },
-  created() {
-    this.latestItem = this.item
+  watch: {
+    item(val) {
+      if (!this.refreshItem) {
+        this.latestItem = val
+      }
+    },
   },
   computed: {
     actionDisplayMode() {
@@ -55,17 +55,32 @@ export default {
       }
       return null
     },
+    refreshItem() {
+      // only update and show
+      if (
+        this.actionDisplayMode !== "page" &&
+        this.currentAction &&
+        ["update", "show"].includes(this.currentAction.name)
+      ) {
+        if (Object.keys(this.currentAction).includes("refreshItem")) {
+          return this.currentAction["refreshItem"]
+        }
+        return this.$admin.options.refreshItemBeforeClickAction
+      } else {
+        return false
+      }
+    },
   },
   methods: {
     async onClick() {
-      if (this.actionDisplayMode !== "page" && this.id && this.useLatestItem) {
+      if (this.refreshItem) {
         try {
           let { data } = await this.$admin.store.dispatch(`${this.resource}/getOne`, {
             id: this.id,
           })
           this.latestItem = data
-        } catch ({ status, message }) {
-          console.warn(message)
+        } catch (err) {
+          console.warn(err)
         }
       }
 

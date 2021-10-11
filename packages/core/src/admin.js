@@ -25,6 +25,7 @@ const defaultOptions = {
   enableOperateAction: true,
   defaultPerPage: 10,
   defaultItemLabelKey: "name",
+  refreshItemBeforeClickAction: true,
 }
 
 export default class EasyAdmin {

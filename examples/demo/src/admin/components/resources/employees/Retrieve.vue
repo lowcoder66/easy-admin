@@ -6,6 +6,7 @@
     :title="title"
     :fields="fields"
     :list-filter="listFilter"
+    :tree-show-item-action="departmentsShowItemAction"
     @update:tree-active="onUpdateTreeActive"
   />
 </template>
@@ -29,6 +30,12 @@ export default {
       } else {
         this.listFilter = {}
       }
+    },
+    departmentsShowItemAction(item, action) {
+      if (action === "show") {
+        return false
+      }
+      return item && this.$admin.hasActionPermission(this.resource, action)
     },
   },
 }

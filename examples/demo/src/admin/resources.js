@@ -12,6 +12,14 @@ export default [
   {
     name: "departments",
     api: "/org/departments",
+    actions: [
+      "create",
+      "delete",
+      {
+        name: "update",
+        refreshItem: false,
+      },
+    ],
   },
   {
     name: "employees",

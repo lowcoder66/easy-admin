@@ -3,6 +3,7 @@
     v-if="showActionBtn && actionDisplayMode === 'dialog'"
     v-model="actionView"
     :persistent="currentAction.name !== 'show'"
+    scrollable
     max-width="500"
   >
     <template v-slot:activator="{ on, attrs }">
@@ -25,7 +26,7 @@
       :title="actionLabel"
       :resource="currentResource"
       :id="id"
-      :item="item"
+      :item="latestItem"
       :display-mode="actionDisplayMode || 'page'"
       @saved="handleFormSaved"
       @cancel="handleActionCancel"

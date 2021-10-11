@@ -1,11 +1,10 @@
 <template>
-  <ActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
-    <Form
+  <EaActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
+    <EaForm
       readonly
       :id="id"
       :value="item"
       :resource="resource.name"
-      @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
       <component
@@ -14,14 +13,12 @@
         :source="input.source"
         :is="`ea-${input.type}-input`"
       ></component>
-    </Form>
-  </ActionWrapper>
+    </EaForm>
+  </EaActionWrapper>
 </template>
 
 <script>
-import Form from "../ui/Form"
 import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
-import ActionWrapper from "../ui/ActionWrapper"
 
 export default {
   props: {
@@ -37,7 +34,6 @@ export default {
       default: "page",
     },
   },
-  components: { ActionWrapper, Form },
   data() {
     return {
       inputs: [],
@@ -47,9 +43,6 @@ export default {
     this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
   },
   methods: {
-    handleFormSaved(data) {
-      this.$emit("saved", data)
-    },
     onCancelAction() {
       this.$emit("cancel")
     },

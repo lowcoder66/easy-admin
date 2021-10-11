@@ -1,7 +1,7 @@
 <template>
   <ActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
     <Form
-      :value="item"
+      :value="newItem"
       :id="id"
       :resource="resource.name"
       @saved="handleFormSaved"
@@ -9,9 +9,10 @@
     >
       <ea-text-input required source="name" />
       <ea-select-input
-        source="parent"
+        readonly
         model="parentId"
-        reference="departments"
+        source="parent"
+        :items="item.parent ? [item.parent] : []"
         item-text="name"
         item-value="id"
         :fetch-filter="{ all: true }"
@@ -40,7 +41,22 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      newItem: {
+        ...this.item,
+        parent: this.item.parent && this.item.parent.id,
+      },
+    }
+  },
+  watch: {
+    item(val) {
+      if (val) {
+        this.newItem = {
+          ...val,
+          parent: val.parent && val.parent.id,
+        }
+      }
+    },
   },
   async created() {},
   methods: {

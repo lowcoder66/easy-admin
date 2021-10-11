@@ -77,7 +77,12 @@ export default {
         source = `${this.parentSource}.${this.source}`
       }
 
-      return this["$admin"].getFieldLabel(this.formState.resource, source)
+      let label = this["$admin"].getFieldLabel(this.formState.resource, source)
+      if (this.required) {
+        return `* ${label}`
+      } else {
+        return label
+      }
     },
     uniqueSourceId() {
       return [this.parentSource, this.index, this.source].filter((s) => s !== undefined).join(".")
