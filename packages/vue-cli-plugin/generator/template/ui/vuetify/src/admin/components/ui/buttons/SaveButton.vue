@@ -5,7 +5,7 @@
     :btn-icon="btnIcon || false"
     :color="color || 'primary'"
     :label="label || defaultLabel"
-    :loading="formState && formState.saving"
+    :loading="form && form.saving"
     @click="onClick"
   />
 </template>
@@ -19,16 +19,25 @@ export default {
   mixins: [Button],
   inject: {
     formState: { default: undefined },
+    actionState: { default: undefined },
   },
   computed: {
     defaultLabel() {
       return this.$t("em.actions.save")
     },
+    form() {
+      if (this.formState) {
+        return this.formState
+      } else if (this.actionState && this.actionState.form) {
+        return this.actionState.form
+      }
+      return null
+    },
   },
   methods: {
     onClick() {
-      if (this.formState.submit) {
-        this.formState.submit()
+      if (this.form && this.form.submit) {
+        this.form.submit()
       }
     },
   },

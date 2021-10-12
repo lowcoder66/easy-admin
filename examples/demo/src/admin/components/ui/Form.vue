@@ -1,28 +1,26 @@
 <template>
   <v-form ref="form" @submit.prevent="onSubmit">
     <slot></slot>
-    <div v-if="!readonly" class="form-actions">
-      <v-spacer></v-spacer>
-      <slot name="actions">
-        <ResetButton text />
-        <SaveButton text />
-      </slot>
-    </div>
   </v-form>
 </template>
 
 <script>
 import Resource from "@lowcoder/easy-admin/src/mixins/resource"
 import set from "lodash/set"
-import SaveButton from "./buttons/SaveButton"
-import ResetButton from "./buttons/ResetButton"
 
 export default {
-  components: { ResetButton, SaveButton },
   mixins: [Resource],
   provide() {
     return {
       formState: this.formState,
+    }
+  },
+  inject: {
+    actionState: { default: undefined },
+  },
+  created() {
+    if (this.actionState) {
+      this.actionState.form = this.formState
     }
   },
   props: {
@@ -145,11 +143,4 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.form-actions
-  display: flex
-
-  button,a
-    &:not(:last-child)
-      margin-right: 8px
-</style>
+<style scoped lang="sass"></style>
