@@ -13,6 +13,7 @@
         <CreateButton
           small
           icon
+          v-if="showItemAction(item.dataItem, 'create')"
           :item="item.id ? item.dataItem : null"
           :resource="resource"
           :display-mode="$admin.options.defaultTreeActionDisplayMode"
@@ -23,7 +24,7 @@
           icon
           v-if="item.id && showItemAction(item.dataItem, 'show')"
           :display-mode="$admin.options.defaultTreeActionDisplayMode"
-          :btn-label="$i18n.t('em.actions.show')"
+          :btn-label="$i18n.t('ea.actions.show')"
           :resource="resource"
           :id="item.id"
           :item="{ ...item.dataItem, parent: item.parent }"
@@ -33,7 +34,7 @@
           icon
           v-if="item.id && showItemAction(item.dataItem, 'update')"
           :display-mode="$admin.options.defaultTreeActionDisplayMode"
-          :btn-label="$i18n.t('em.actions.update')"
+          :btn-label="$i18n.t('ea.actions.update')"
           :resource="resource"
           :id="item.id"
           :item="{ ...item.dataItem, parent: item.parent }"
@@ -44,7 +45,7 @@
           icon
           v-if="item.id && showItemAction(item.dataItem, 'delete')"
           :display-mode="$admin.options.defaultTreeActionDisplayMode"
-          :btn-label="$i18n.t('em.actions.delete')"
+          :btn-label="$i18n.t('ea.actions.delete')"
           :resource="resource"
           :id="item.id"
           :item="{ ...item.dataItem, parent: item.parent }"
@@ -66,6 +67,7 @@ export default {
   components: { DeleteButton, UpdateButton, ShowButton, CreateButton },
   mixins: [Resource],
   props: {
+    loadData: Function,
     title: String,
     idKey: {
       type: String,
@@ -75,6 +77,7 @@ export default {
       type: String,
       default: "name",
     },
+    nodeLabel: Function,
     childrenKey: {
       type: String,
       default: "children",
@@ -119,7 +122,9 @@ export default {
   methods: {
     async fetchData() {
       this.loading = true
-      let { data, total } = await this.$store.dispatch(`${this.resource}/getTree`, this.retrieveParams)
+      let { data, total } = this.loadData
+        ? await this.loadData(this.retrieveParams)
+        : await this.$store.dispatch(`${this.resource}/getTree`, this.retrieveParams)
 
       let flat = (node) => {
         return [node.dataItem, ...(node.children ? node.children.map((child) => flat(child)).flat() : [])]
@@ -146,7 +151,7 @@ export default {
     formatTreeNode(item, parent = null) {
       return {
         id: item[this.idKey],
-        name: item[this.labelKey],
+        name: this.nodeLabel ? this.nodeLabel(item) : item[this.labelKey],
         children: item[this.childrenKey] ? item[this.childrenKey].map((child) => this.formatTreeNode(child, item)) : [],
         dataItem: item,
         parent: parent

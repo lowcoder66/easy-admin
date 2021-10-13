@@ -32,7 +32,7 @@
 
         <v-spacer></v-spacer>
 
-        <div class="data-table-actions">
+        <div v-if="!hideActions" class="data-table-actions">
           <template v-if="selection.length">
             <slot name="bulk.actions"></slot>
             <v-btn color="error" @click="handleBatchDel">
@@ -55,7 +55,7 @@
           v-if="showItemAction(item, 'show')"
           small
           outlined
-          :btn-label="$i18n.t('em.actions.show')"
+          :btn-label="$i18n.t('ea.actions.show')"
           :resource="resource"
           :id="item.id"
           :item="item"
@@ -64,7 +64,7 @@
           v-if="showItemAction(item, 'update')"
           small
           outlined
-          :btn-label="$i18n.t('em.actions.update')"
+          :btn-label="$i18n.t('ea.actions.update')"
           :resource="resource"
           :id="item.id"
           :item="item"
@@ -74,12 +74,13 @@
           v-if="showItemAction(item, 'delete')"
           small
           outlined
-          :btn-label="$i18n.t('em.actions.delete')"
+          :btn-label="$i18n.t('ea.actions.delete')"
           :resource="resource"
           :id="item.id"
           :item="item"
           @action-completed="fetchData"
         />
+        <slot name="rowActions" :row="item"></slot>
       </div>
     </template>
     <!-- 根据字段类型渲染 -->
@@ -119,13 +120,14 @@ export default {
       type: Object,
       default: () => {},
     },
-    disableColumnActions: Boolean,
     showItemAction: {
       type: Function,
       default: function (item, action) {
         return item && this.$admin.hasActionPermission(this.resource, action)
       },
     },
+    hideActions: Boolean,
+    hideRowActions: Boolean,
   },
   data() {
     return {
@@ -168,11 +170,11 @@ export default {
       })
 
       if (
-        !this.disableColumnActions &&
+        !this.hideRowActions &&
         this.currentResource.actions.some((a) => ["retrieve", "create"].indexOf(a.name) === -1)
       ) {
         fields.push({
-          text: this.$i18n.t("em.column.actions") || "actions",
+          text: this.$i18n.t("ea.column.actions") || "actions",
           value: "actions",
           sortable: false,
           align: "right",
@@ -226,10 +228,11 @@ export default {
     this.fetchData()
   },
   watch: {
-    filter(val) {
-      if (val) {
+    filter: {
+      handler() {
         this.fetchData()
-      }
+      },
+      immediate: true,
     },
   },
 }

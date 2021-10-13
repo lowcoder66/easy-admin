@@ -7,7 +7,7 @@
       @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <EaTextInput source="code" required />
+      <EaTextInput readonly source="code" required />
       <EaTextInput source="name" required />
       <EaTextInput source="description" multiline />
       <EaTransferInput source="authorities" reference="authorities" />

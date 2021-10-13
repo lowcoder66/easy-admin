@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     defaultLabel() {
-      return this.$t("em.actions.reset")
+      return this.$t("ea.actions.reset")
     },
     form() {
       if (this.formState) {

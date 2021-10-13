@@ -41,10 +41,10 @@ export default class EasyAdmin {
     this.resources = completeResourcesObject(resources, this)
 
     // i18n
-    i18n.mergeLocaleMessage("zh", { em: zh })
+    i18n.mergeLocaleMessage("zh", { ea: zh })
     if (this.locales) {
       Object.keys(this.locales).forEach((locale) => {
-        i18n.mergeLocaleMessage(locale, { em: this.locales[locale] })
+        i18n.mergeLocaleMessage(locale, { ea: this.locales[locale] })
       })
     }
 

@@ -1,14 +1,5 @@
 <template>
-  <TreeList
-    tree-resource="departments"
-    :resource="resource"
-    :action="action"
-    :title="title"
-    :fields="fields"
-    :list-filter="listFilter"
-    :tree-show-item-action="departmentsShowItemAction"
-    @update:tree-active="onUpdateTreeActive"
-  />
+  <TreeList :tree-props="treeProps" :list-props="listProps" @update:tree-active="onUpdateTreeActive" />
 </template>
 
 <script>
@@ -19,9 +10,34 @@ export default {
   props: ["resource", "title", "action"],
   data() {
     return {
-      fields: ["name", "phone"],
+      fields: [
+        {
+          source: "name",
+          sortable: true,
+        },
+        {
+          source: "phone",
+          sortable: true,
+        },
+        "email",
+      ],
       listFilter: {},
     }
+  },
+  computed: {
+    treeProps() {
+      return {
+        resource: "departments",
+        showItemAction: this.departmentsShowItemAction,
+      }
+    },
+    listProps() {
+      return {
+        title: this.title,
+        fields: this.fields,
+        filter: this.listFilter,
+      }
+    },
   },
   methods: {
     onUpdateTreeActive(departments) {

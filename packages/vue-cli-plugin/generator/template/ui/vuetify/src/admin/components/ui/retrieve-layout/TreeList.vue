@@ -4,18 +4,14 @@
       <v-col cols="12" md="3">
         <v-card>
           <v-card-text>
-            <DataTree
-              :resource="treeResource || layout.treeResource"
-              @update:active="onUpdateActive"
-              :show-item-action="treeShowItemAction"
-            />
+            <DataTree v-bind="{ ...treeProps }" @update:active="onUpdateActive" />
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="9">
         <v-card>
           <v-card-text>
-            <DataGrid :title="title" :fields="fields" :filter="listFilter" :show-item-action="listShowItemAction" />
+            <DataGrid v-bind="{ ...listProps }" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -32,13 +28,8 @@ export default {
   mixins: [RetrieveLayout],
   components: { DataTree, DataGrid },
   props: {
-    treeResource: String,
-    listFilter: {
-      type: Object,
-      default: () => {},
-    },
-    treeShowItemAction: Function,
-    listShowItemAction: Function,
+    treeProps: Object,
+    listProps: Object,
   },
   methods: {
     onUpdateActive(items) {

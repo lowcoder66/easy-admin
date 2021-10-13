@@ -1,13 +1,14 @@
 <template>
   <EaActionWrapper :title="title" :resource="resource.name" :display-mode="displayMode" @cancel="onCancelAction">
     <EaForm
+      readonly
       :id="id"
       :value="item"
       :resource="resource.name"
       @saved="handleFormSaved"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <EaTextInput source="code" required />
+      <EaTextInput readonly source="code" required />
       <EaTextInput source="name" required />
       <EaTextInput source="description" multiline />
       <EaTransferInput source="authorities" reference="authorities" />

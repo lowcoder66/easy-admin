@@ -128,7 +128,7 @@ export const getResourceTitle = (resource, count = 10, admin) => {
 export const getActionTitle = (resource, action, admin) => {
   let count = action.name === "retrieve" ? 10 : 1
   let resourceTitle = getResourceTitle(resource, count, admin)
-  let actionNameKey = `em.title.actions.${action.name}`
+  let actionNameKey = `ea.title.actions.${action.name}`
   return admin.i18n && admin.i18n.te(actionNameKey)
     ? admin.i18n.t(actionNameKey, { resource: resourceTitle })
     : startCase(`${action.name}_${resource.name}`)
@@ -202,7 +202,7 @@ const resourceActionRoute = (resource, action, admin) => {
                             status,
                             message:
                                 status === 404
-                                    ? admin.i18n.t("em.pages.not_found", {
+                                    ? admin.i18n.t("ea.pages.not_found", {
                                         //resource: resource.singularName,
                                         id,
                                     })

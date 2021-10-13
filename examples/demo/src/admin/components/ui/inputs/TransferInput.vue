@@ -5,7 +5,7 @@
       <v-col cols="5">
         <EaTransferList
           :readonly="readonlyInput"
-          :label="sourceListLabel || $t('em.transfer.source_list')"
+          :label="sourceListLabel || $t('ea.transfer.source_list')"
           :items="leftItems"
           title-key="code"
           sub-title-key="name"
@@ -26,7 +26,7 @@
       <v-col cols="5">
         <EaTransferList
           :readonly="readonlyInput"
-          :label="sourceListLabel || $t('em.transfer.target_list')"
+          :label="sourceListLabel || $t('ea.transfer.target_list')"
           :items="rightItems"
           title-key="code"
           sub-title-key="name"

@@ -10,10 +10,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click.native="$store.dispatch('messages/cancel')">
-          {{ $t("em.confirm.no") }}
+          {{ $t("ea.confirm.no") }}
         </v-btn>
         <v-btn color="red" text @click.native="$store.dispatch('messages/agree')">
-          {{ $t("em.confirm.yes") }}
+          {{ $t("ea.confirm.yes") }}
         </v-btn>
       </v-card-actions>
     </v-card>

@@ -8,12 +8,12 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
-    <v-divider />
-    <v-card-text class="py-4" :style="`height: ${$vuetify.breakpoint.height * 0.7}px`">
+    <v-divider v-if="!inPage" />
+    <v-card-text class="py-4" :style="inPage ? '' : `max-height: ${$vuetify.breakpoint.height * 0.7}px`">
       <slot></slot>
     </v-card-text>
-    <v-divider />
-    <v-card-actions>
+    <v-divider v-if="!inPage && !readonlyForm" />
+    <v-card-actions v-if="!readonlyForm">
       <v-spacer></v-spacer>
       <EaResetButton text />
       <EaSaveButton text />
@@ -47,6 +47,9 @@ export default {
   computed: {
     inPage() {
       return this.displayMode === "page"
+    },
+    readonlyForm() {
+      return this.actionState && this.actionState.form && this.actionState.form.readonly
     },
   },
   methods: {

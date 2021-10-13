@@ -9,7 +9,7 @@
         hide-details
         class="ma-0 pa-0"
       />
-      <span>{{ label || $t("em.transfer.label") }}</span>
+      <span>{{ label || $t("ea.transfer.label") }}</span>
       <v-spacer />
       <span>{{ selectedItems.length }}/{{ items.length }}</span>
     </v-card-title>
@@ -20,7 +20,7 @@
           dense
           clearable
           hide-details
-          :placeholder="$t('em.transfer.filter_placeholder')"
+          :placeholder="$t('ea.transfer.filter_placeholder')"
           class="py-0"
           v-model="filter"
         >

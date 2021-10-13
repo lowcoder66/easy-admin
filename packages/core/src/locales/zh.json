@@ -48,5 +48,9 @@
     "filter_placeholder": "输入搜索内容",
     "source_list": "源列表",
     "target_list": "目的列表"
+  },
+  "list": {
+    "label": "列表",
+    "all": "全部"
   }
 }

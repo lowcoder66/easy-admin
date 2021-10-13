@@ -20,14 +20,14 @@
       <v-card-text>{{ confirmMessage }}</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="info" text @click.native="confirmNo">{{ $t("em.confirm.no") }}</v-btn>
+        <v-btn color="info" text @click.native="confirmNo">{{ $t("ea.confirm.no") }}</v-btn>
         <ActionButton
           text
           :resource="resource"
           :loading="deleting"
           :icon="false"
           color="red"
-          :label="$t('em.confirm.yes')"
+          :label="$t('ea.confirm.yes')"
           :action-key="actionKey"
           :id="id"
           :item="item"
@@ -83,13 +83,13 @@ export default {
       return "delete" + (this.action ? `=${this.action}` : "")
     },
     confirmTitle() {
-      return this.$t("em.confirm.delete_title", {
+      return this.$t("ea.confirm.delete_title", {
         resource: this["$admin"].getResourceLabel(this.currentResource, 10),
         label: this["$admin"].getResourceItemLabel(this.currentResource, this.item),
       })
     },
     confirmMessage() {
-      return this.$t("em.confirm.delete_message", {
+      return this.$t("ea.confirm.delete_message", {
         resource: this["$admin"].getResourceLabel(this.currentResource, 10),
         label: this["$admin"].getResourceItemLabel(this.currentResource, this.item),
       })

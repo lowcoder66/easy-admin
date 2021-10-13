@@ -12,7 +12,7 @@ export default {
         let rules = []
 
         if (this.required) {
-          rules.push((v) => !!v || this.$t("em.hints.required", { field: this.inputLabel }))
+          rules.push((v) => !!v || this.$t("ea.hints.required", { field: this.inputLabel }))
         }
         return rules
       },
@@ -94,7 +94,7 @@ export default {
       return this.readonly || (this.formState && this.formState.readonly)
     },
     readonlyHint() {
-      return this.readonlyInput && !this.hideHint ? this.$t("em.hints.readonly", { field: "*" }) : null
+      return this.readonlyInput && !this.hideHint ? this.$t("ea.hints.readonly", { field: "*" }) : null
     },
     commonProps() {
       return {
