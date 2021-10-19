@@ -2,7 +2,7 @@
   <v-data-table
     v-model="selection"
     :loading="loading"
-    :show-select="false"
+    :show-select="showSelect"
     item-key="id"
     :headers="headers"
     :items="items"
@@ -15,12 +15,91 @@
       <v-toolbar
         class="mb-2"
         flat
-        :color="selection.length ? 'grey lighten-4' : 'white'"
-        :elevation="selection.length ? 1 : 0"
+        :color="selection.length || filterExpanded ? 'grey lighten-4' : 'white'"
+        :elevation="selection.length || filterExpanded ? 1 : 0"
+        :extended="filterExpanded"
+        :extension-height="filtersExtensionHeight"
       >
-        <v-toolbar-title v-if="!selection.length">
-          <h2>{{ title }}</h2>
-        </v-toolbar-title>
+        <!-- 展开搜索时的头部 -->
+        <template v-if="filterExpanded" #extension>
+          <v-sheet
+            v-resize="onFiltersWrapperResize"
+            ref="filtersWrapper"
+            class="filters-wrapper transparent d-flex flex-wrap align-self-start"
+            width="100%"
+          >
+            <slot name="filters" :list-filter="listParams.filter">
+              <component
+                v-for="(field, index) in filterableFields"
+                v-model="listParams.filter[field.model || field.source]"
+                :label="field.label"
+                :key="index"
+                :is="`ea-${field.type}-input`"
+                hide-details
+              />
+            </slot>
+          </v-sheet>
+        </template>
+        <template v-if="filterExpanded">
+          <v-btn icon @click="filterExpanded = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>
+            {{ $t("ea.title.actions.filter", { resource: $admin.getResourceLabel(resource) }) }}
+          </v-toolbar-title>
+          <v-spacer />
+          <v-btn color="white" @click="handleResetFilters" class="mr-2">
+            <v-icon left>mdi-refresh</v-icon>
+            <span>{{ $t("ea.actions.reset") }}</span>
+          </v-btn>
+          <v-btn color="primary" @click="handleFilter">
+            <v-icon left>mdi-filter</v-icon>
+            <span>{{ $t("ea.actions.filter") }}</span>
+          </v-btn>
+        </template>
+
+        <!-- 默认头部 -->
+        <template v-else-if="!selection.length">
+          <v-toolbar-title>
+            <h2>{{ title }}</h2>
+          </v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-sheet v-if="singleDisplayFilterField" width="250">
+            <v-text-field
+              v-model="listParams.filter[singleDisplayFilterField.model || singleDisplayFilterField.source]"
+              :label="singleDisplayFilterField.label"
+              @keydown="handleFilterFieldKeydown"
+              hide-details
+              single-line
+            >
+              <template #append-outer>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon small v-bind="attrs" v-on="on" @click="handleResetFilters">
+                      <v-icon>mdi-refresh</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ $t("ea.list.reset_filter") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon small v-bind="attrs" v-on="on" @click="filterExpanded = true">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ $t("ea.list.expand_filter") }}</span>
+                </v-tooltip>
+              </template>
+            </v-text-field>
+          </v-sheet>
+          <v-spacer />
+          <div v-if="!hideActions" class="data-table-actions">
+            <slot name="actions"></slot>
+            <CreateButton :resource="resource" @action-completed="fetchData" />
+          </div>
+        </template>
+
+        <!-- 选择时的头部 -->
         <template v-else>
           <v-btn icon @click="selection = []">
             <v-icon>mdi-close</v-icon>
@@ -28,23 +107,9 @@
           <v-toolbar-title>
             {{ `已选择 ${selection.length} 项` }}
           </v-toolbar-title>
+          <v-spacer />
+          <slot name="bulk.actions" :selection="selection"> </slot>
         </template>
-
-        <v-spacer></v-spacer>
-
-        <div v-if="!hideActions" class="data-table-actions">
-          <template v-if="selection.length">
-            <slot name="bulk.actions"></slot>
-            <v-btn color="error" @click="handleBatchDel">
-              <v-icon left>mdi-delete</v-icon>
-              <span>批量删除</span>
-            </v-btn>
-          </template>
-          <template v-else>
-            <slot name="actions"></slot>
-            <CreateButton :resource="resource" @action-completed="fetchData" />
-          </template>
-        </div>
       </v-toolbar>
     </template>
 
@@ -128,6 +193,7 @@ export default {
     },
     hideActions: Boolean,
     hideRowActions: Boolean,
+    showSelect: Boolean,
   },
   data() {
     return {
@@ -143,6 +209,8 @@ export default {
           perPage: this.$admin.options.defaultPerPage,
         },
       },
+      filterExpanded: false,
+      filtersExtensionHeight: 100,
     }
   },
   computed: {
@@ -154,20 +222,69 @@ export default {
         .map((f) => {
           return {
             ...f,
-            type: f.type,
+            type: f.type || "text",
             label: f.label || this.$admin.getFieldLabel(this.resource, f.labelKey || f.source),
           }
         })
+        .filter((f) => f.source)
+    },
+    filterableFields() {
+      return this.tableFields.filter((f) => f.filterable)
+    },
+    singleDisplayFilterField() {
+      if (this.filterableFields) {
+        let fieldSourceWeight = (source) => {
+          switch (source) {
+            case "name":
+              return 9
+            case "code":
+              return 8
+            default:
+              return 1
+          }
+        }
+        let fieldTypeWeight = (type) => {
+          switch (type) {
+            case "text":
+              return 9
+            case "email":
+              return 8
+            default:
+              return 1
+          }
+        }
+
+        let sorted = [...this.filterableFields].sort((f1, f2) => {
+          let aSourceWeight = fieldSourceWeight(f1.source),
+            bSourceWeight = fieldSourceWeight(f2.source)
+          return aSourceWeight === bSourceWeight
+            ? fieldTypeWeight(f1.type) - fieldTypeWeight(f1.type)
+            : aSourceWeight - bSourceWeight
+        })
+        let filteredFields = sorted.filter((f) => Object.keys(this.listParams.filter).includes(f.source))
+
+        if (filteredFields.length > 0) {
+          return filteredFields[0]
+        }
+        if (sorted.length > 0) {
+          return sorted[0]
+        }
+
+        return null
+      }
+      return null
     },
     headers() {
-      let fields = this.tableFields.map((field) => {
-        return {
-          text: field.label,
-          value: field.source,
-          sortable: field.sortable,
-          align: field.align || this.smartAlign(field),
-        }
-      })
+      let fields = this.tableFields
+        .filter((f) => !f.hide)
+        .map((field) => {
+          return {
+            text: field.label,
+            value: field.source,
+            sortable: field.sortable,
+            align: field.align || this.smartAlign(field),
+          }
+        })
 
       if (
         !this.hideRowActions &&
@@ -214,13 +331,35 @@ export default {
       let { sort, filter, pagination } = this.listParams
       let { data, total } = await this.$store.dispatch(`${this.resource}/getList`, {
         sort,
-        filter: { ...filter, ...this.filter },
+        filter,
         pagination,
       })
 
       this.totalItems = total
       this.items = data
       this.loading = false
+    },
+    handleFilterFieldKeydown(ke) {
+      // when keyCode equals 13, exec filter
+      if (ke && ke.keyCode === 13) {
+        this.handleFilter()
+      }
+    },
+    handleResetFilters() {
+      if (this.filter) {
+        this.listParams.filter = { ...this.filter }
+      } else {
+        this.listParams.filter = {}
+        this.listParams.pagination.page = 1
+      }
+      this.fetchData()
+    },
+    handleFilter() {
+      this.fetchData()
+    },
+    onFiltersWrapperResize() {
+      this.filtersExtensionHeight =
+        ((this.$refs.filtersWrapper && this.$refs.filtersWrapper.$el.offsetHeight) || 80) + 20
     },
   },
   mounted() {
@@ -229,7 +368,13 @@ export default {
   },
   watch: {
     filter: {
-      handler() {
+      handler(val) {
+        if (val) {
+          this.listParams.filter = { ...val }
+        } else {
+          this.listParams.filter = {}
+          this.listParams.pagination.page = 1
+        }
         this.fetchData()
       },
       immediate: true,
@@ -254,4 +399,9 @@ export default {
       margin-right: $spacer
     &:not(button:last-of-type)
       margin-right: $spacer
+
+.filters-wrapper
+  ::v-deep >*
+    max-width: 200px
+    margin: 0 $spacer * 2 $spacer * 5 $spacer * 2
 </style>

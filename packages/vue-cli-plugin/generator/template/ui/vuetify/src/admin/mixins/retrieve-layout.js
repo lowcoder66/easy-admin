@@ -1,3 +1,3 @@
 export default {
-  props: ["resource", "title", "action", "fields", "layout", "showItemAction"],
+  props: ["resource", "title", "action", "fields", "layout", "showItemAction", "showSelect"],
 }

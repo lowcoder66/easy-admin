@@ -36,4 +36,14 @@ export default [
     icon: "mdi-gift",
     actions: ["add", "list=simple", "list"],
   },
+  {
+    name: "accounts",
+    icon: "mdi-key",
+    api: "/uac/management/accounts",
+  },
+  {
+    name: "clients",
+    icon: "mdi-certificate",
+    api: "/uac/management/clients",
+  },
 ]

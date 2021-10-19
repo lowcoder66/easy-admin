@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%">
     <v-card-text>
-      <DataGrid :title="title" :fields="fields" :show-item-action="showItemAction">
+      <DataGrid :show-select="showSelect" :title="title" :fields="fields" :show-item-action="showItemAction">
         <!-- 传递 slots -->
         <slot v-for="(_, name) in $slots" :name="name" :slot="name" />
         <template v-for="(_, name) in $scopedSlots" :slot="name" slot-scope="slotData">

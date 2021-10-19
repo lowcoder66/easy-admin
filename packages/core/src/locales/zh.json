@@ -5,7 +5,8 @@
       "delete": "删除{resource}",
       "update": "编辑{resource}",
       "retrieve": "{resource}管理",
-      "show": "查看{resource}"
+      "show": "查看{resource}",
+      "filter": "过滤{resource}"
     }
   },
   "actions": {
@@ -14,6 +15,7 @@
     "update": "编辑",
     "list": "列举",
     "show": "查看",
+    "filter": "过滤",
     "export": "导出",
     "clone": "克隆",
     "cancel": "取消",
@@ -24,7 +26,8 @@
     "move": "移动",
     "save_and_add": "保存并添加",
     "save_and_show": "保存并查看",
-    "save_and_edit": "保存并编辑"
+    "save_and_edit": "保存并编辑",
+    "batch_del": "批量删除"
   },
   "column": {
     "actions": "操作"
@@ -51,6 +54,8 @@
   },
   "list": {
     "label": "列表",
-    "all": "全部"
+    "all": "全部",
+    "expand_filter": "展开过滤",
+    "reset_filter": "重置过滤"
   }
 }

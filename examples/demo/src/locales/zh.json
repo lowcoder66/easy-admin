@@ -8,7 +8,10 @@
     "org_authorities": "权限管理",
     "org_roles": "角色管理",
     "org_employees": "员工管理",
-    "org_positions": "职位管理"
+    "org_positions": "职位管理",
+    "auth": "账户认证",
+    "auth_accounts": "账户管理",
+    "auth_clients": "客户端"
   },
   "resources": {
     "authorities": {
@@ -50,6 +53,26 @@
     },
     "positions": {
       "name": "职位 | 职位",
+      "fields": {
+        "name": "名称",
+        "code": "代码",
+        "description": "描述",
+        "builtIn": "内置的"
+      }
+    },
+    "accounts": {
+      "name": "账户 | 账户",
+      "fields": {
+        "phone": "手机",
+        "name": "姓名",
+        "email": "邮箱",
+        "registerTime": "注册时间",
+        "enabled": "是否启用",
+        "searchKeyword": "搜索关键字"
+      }
+    },
+    "clients": {
+      "name": "客户端 | 客户端",
       "fields": {
         "name": "名称",
         "code": "代码",
