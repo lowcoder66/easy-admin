@@ -39,6 +39,7 @@
     "vuetify-loader": "^1.7.3"
   },
   "publishConfig": {
-    "registry": "http://47.111.125.75:8081/repository/npm"
-  }
+    "registry": "http://47.111.125.75:8081/repository/npm-hosted/"
+  },
+  "gitHead": "ecc8f80d7bddc3ff60d402d0d3ca54f30f851710"
 }
