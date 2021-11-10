@@ -28,7 +28,7 @@ import { AxiosHttp } from "@lowcoder/easy-admin/src/providers";
 Vue.use(EasyManage);
 
 // http client
-const baseURL = process.env.VUE_APP_EM_API_URL;
+const baseURL = process.env.NODE_ENV === "development" ? "/api" : process.env.VUE_APP_EM_API_URL
 const http = new AxiosHttp({
     overrideOptions: {
         baseURL
