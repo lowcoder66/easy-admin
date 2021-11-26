@@ -40,6 +40,26 @@ export default [
     name: "accounts",
     icon: "mdi-key",
     api: "/uac/management/accounts",
+    actions: [
+      "retrieve",
+      "create",
+      "delete",
+      {
+        name: "show",
+        refreshItem: false,
+      },
+      {
+        name: "operate",
+        key: "operate=updateAuthorities",
+        refreshItem: false,
+      },
+      {
+        name: "operate",
+        key: "operate=updateStatus",
+        refreshItem: false,
+        displayMode: "N/A",
+      },
+    ],
   },
   {
     name: "clients",

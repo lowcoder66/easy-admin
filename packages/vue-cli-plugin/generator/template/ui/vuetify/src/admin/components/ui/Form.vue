@@ -38,6 +38,27 @@ export default {
       type: Boolean,
       default: false,
     },
+    postSave: {
+      type: Function,
+      default: async function (id, model) {
+        if (this.currentAction.name === "operate") {
+          return await this.$store.dispatch(`${this.resource}/operate`, {
+            id: id,
+            data: model,
+            operateKey: this.currentAction.key,
+          })
+        } else {
+          return id
+            ? await this.$store.dispatch(`${this.resource}/update`, {
+                id: id,
+                data: model,
+              })
+            : await this.$store.dispatch(`${this.resource}/create`, {
+                data: model,
+              })
+        }
+      },
+    },
   },
   data() {
     return {
@@ -97,14 +118,7 @@ export default {
       this.formState.saving = true
 
       try {
-        let { data } = this.id
-          ? await this.$store.dispatch(`${this.resource}/update`, {
-              id: this.id,
-              data: this.formState.model,
-            })
-          : await this.$store.dispatch(`${this.resource}/create`, {
-              data: this.formState.model,
-            })
+        let { data } = await this.postSave(this.id, this.formState.model)
 
         this.reset()
         this.$emit("saved", data)

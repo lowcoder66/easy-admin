@@ -116,36 +116,22 @@
     <!-- 操作列 -->
     <template v-slot:item.actions="{ item }">
       <div class="data-table-row-actions">
-        <ShowButton
-          v-if="showItemAction(item, 'show')"
-          small
-          outlined
-          :btn-label="$i18n.t('ea.actions.show')"
-          :resource="resource"
-          :id="item.id"
-          :item="item"
-        />
-        <UpdateButton
-          v-if="showItemAction(item, 'update')"
-          small
-          outlined
-          :btn-label="$i18n.t('ea.actions.update')"
-          :resource="resource"
-          :id="item.id"
-          :item="item"
-          @action-completed="fetchData"
-        />
-        <DeleteButton
-          v-if="showItemAction(item, 'delete')"
-          small
-          outlined
-          :btn-label="$i18n.t('ea.actions.delete')"
-          :resource="resource"
-          :id="item.id"
-          :item="item"
-          @action-completed="fetchData"
-        />
-        <slot name="rowActions" :row="item"></slot>
+        <template v-for="(action, index) in defaultColumnActions">
+          <component
+            :key="index"
+            :is="rowActionBtnName(action)"
+            v-if="showItemAction(item, action.key)"
+            small
+            outlined
+            :btn-label="action.label || $i18n.t('ea.actions.' + action.name)"
+            :resource="resource"
+            :id="item.id"
+            :item="item"
+            @action-completed="fetchData"
+          />
+        </template>
+
+        <slot name="rowActions" :row="item" :resource="resource" :fetch-data="fetchData"></slot>
       </div>
     </template>
     <!-- 根据字段类型渲染 -->
@@ -214,6 +200,14 @@ export default {
     }
   },
   computed: {
+    defaultColumnActions() {
+      let defaultActionsName = ["show", "update", "delete"]
+      return this.currentResource.actions
+        .filter((a) => defaultActionsName.includes(a.name))
+        .sort((a1, a2) => {
+          return defaultActionsName.findIndex((a) => a === a1.name) - defaultActionsName.findIndex((a) => a === a2.name)
+        })
+    },
     tableFields() {
       return this.fields
         .map((f) => {
@@ -302,6 +296,13 @@ export default {
     },
   },
   methods: {
+    rowActionBtnName(action) {
+      if (["delete", "update", "show"].includes(action.name)) {
+        return `ea-${action.name}-button`
+      }
+
+      return "ea-action-button"
+    },
     smartAlign(field) {
       if (["number"].includes(field.type)) {
         return "right"

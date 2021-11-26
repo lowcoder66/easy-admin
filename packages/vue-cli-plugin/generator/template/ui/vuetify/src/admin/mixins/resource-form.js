@@ -1,6 +1,7 @@
 export default {
   props: {
     resource: Object,
+    action: Object,
     item: Object,
     readonly: Boolean,
     id: {

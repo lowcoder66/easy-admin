@@ -29,8 +29,9 @@ const completeActionsObject = (actions, admin) => {
   return actions
     .map((a) => {
       let actionObj
+      const aliasReg = /^(\w+)?=(\w+)$/
       if (typeof a === "string") {
-        let aliasMatched = a.match(/^(\w+)?=(\w+)$/)
+        let aliasMatched = a.match(aliasReg)
         if (aliasMatched) {
           actionObj = {
             name: aliasMatched[1],
@@ -45,6 +46,11 @@ const completeActionsObject = (actions, admin) => {
         }
       } else {
         actionObj = a
+      }
+
+      // alias
+      if (a.key && !a["alias"] && a.key.match(aliasReg)) {
+        actionObj["alias"] = a.key.match(aliasReg)[2]
       }
 
       // displayMode and retrieveLayout
@@ -65,7 +71,7 @@ const completeActionsObject = (actions, admin) => {
       actionObj.displayMode = displayMode
 
       // link path and icon
-      let actionAlias = actionObj.alias ? "-" + actionObj.alias : ""
+      let actionAlias = actionObj["alias"] ? "-" + kebabCase(actionObj["alias"]) : ""
       switch (actionObj.name) {
         case "retrieve":
           actionObj.path = actionObj.path || (actionAlias ? "retrieve" + actionAlias : "")
@@ -88,6 +94,7 @@ const completeActionsObject = (actions, admin) => {
           actionObj.icon = actionObj.icon || "mdi-cogs"
           break
       }
+
       return actionObj
     })
     .filter(

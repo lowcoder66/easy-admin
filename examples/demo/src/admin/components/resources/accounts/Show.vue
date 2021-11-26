@@ -7,32 +7,23 @@
       :resource="resource.name"
       :redirect="displayMode === 'page' ? 'retrieve' : false"
     >
-      <component
-        v-for="input in inputs"
-        :key="input.source"
-        :source="input.source"
-        :is="`ea-${input.type}-input`"
-      ></component>
+      <EaTextInput source="name" />
+      <EaTextInput source="phone" />
+      <EaTextInput source="email" />
+      <EaBooleanInput source="enabled" />
+      <EaAutocompleteInput source="authorities" :items="item['authorities']" multiple />
+      <EaDateTimeInput source="registerTime" />
     </EaForm>
   </EaActionWrapper>
 </template>
 
 <script>
-import ResourceForm from "../../mixins/resource-form"
-import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
+import ResourceForm from "../../../mixins/resource-form"
 
 export default {
   mixins: [ResourceForm],
   props: {
     title: String,
-  },
-  data() {
-    return {
-      inputs: [],
-    }
-  },
-  async created() {
-    this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
   },
 }
 </script>

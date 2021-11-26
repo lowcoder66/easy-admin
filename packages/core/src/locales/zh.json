@@ -27,7 +27,9 @@
     "save_and_add": "保存并添加",
     "save_and_show": "保存并查看",
     "save_and_edit": "保存并编辑",
-    "batch_del": "批量删除"
+    "batch_del": "批量删除",
+    "enable": "启用",
+    "disable": "禁用"
   },
   "column": {
     "actions": "操作"

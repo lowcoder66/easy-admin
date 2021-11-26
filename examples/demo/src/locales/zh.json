@@ -68,6 +68,7 @@
         "email": "邮箱",
         "registerTime": "注册时间",
         "enabled": "是否启用",
+        "authorities": "账户授权",
         "searchKeyword": "搜索关键字"
       }
     },

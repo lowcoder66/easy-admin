@@ -25,6 +25,7 @@
       :is="actionViewComponentName"
       :title="actionLabel"
       :resource="currentResource"
+      :action="currentAction"
       :id="id"
       :item="latestItem"
       :display-mode="actionDisplayMode || 'page'"
@@ -82,7 +83,9 @@ export default {
   },
   computed: {
     actionViewComponentName() {
-      let componentName = `${upperFirst(camelCase(this.resource))}${upperFirst(this.currentAction.name)}`
+      let componentName = `${upperFirst(camelCase(this.resource))}${upperFirst(
+        camelCase(this.currentAction["alias"] || this.currentAction.name)
+      )}`
       return componentName in this.$options.components
         ? componentName
         : `Ea${upperFirst(this.currentAction.name)}Guesser`

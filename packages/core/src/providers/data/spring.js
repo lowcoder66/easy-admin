@@ -1,4 +1,16 @@
-import { GET_LIST, GET_MANY, GET_ONE, CREATE, UPDATE, UPDATE_MANY, DELETE, DELETE_MANY, GET_TREE } from "./actions"
+import {
+  GET_LIST,
+  GET_MANY,
+  GET_ONE,
+  CREATE,
+  UPDATE,
+  UPDATE_MANY,
+  DELETE,
+  DELETE_MANY,
+  GET_TREE,
+  OPERATE,
+  HTTP_CLIENT,
+} from "./actions"
 import qs from "qs"
 
 export default (httpClient) => {
@@ -34,6 +46,7 @@ export default (httpClient) => {
   }
 
   return {
+    [HTTP_CLIENT]: httpClient,
     [GET_TREE]: async (resource, params) => {
       const { sort, filter } = params
       let query = {
@@ -120,6 +133,15 @@ export default (httpClient) => {
     [DELETE]: (resource, params) => httpClient.delete(`${resource}/${params.id}`),
     [DELETE_MANY]: (resource, params) => {
       return Promise.all(params.ids.map((id) => httpClient.delete(`${resource}/${id}`))).then(() => Promise.resolve())
+    },
+    [OPERATE]: (resource, params) => {
+      let resourceUrl = `${resource}`
+      if (params.id) {
+        resourceUrl += `/${params.id}`
+      }
+      resourceUrl += `?${params.operateKey}`
+
+      httpClient.post(resourceUrl, params.data)
     },
   }
 }

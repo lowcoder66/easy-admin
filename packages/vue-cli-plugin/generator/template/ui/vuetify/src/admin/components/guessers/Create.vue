@@ -17,19 +17,13 @@
 </template>
 
 <script>
+import ResourceForm from "../../mixins/resource-form"
 import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
 
 export default {
+  mixins: [ResourceForm],
   props: {
     title: String,
-    resource: Object,
-    item: Object,
-
-    displayMode: {
-      type: String,
-      validator: (v) => ["page", "dialog", "drawer"].includes(v),
-      default: "page",
-    },
   },
   data() {
     return {
@@ -38,14 +32,6 @@ export default {
   },
   async created() {
     this.inputs = await guessInputs(this.$store, this.$i18n, this.resource.name)
-  },
-  methods: {
-    handleFormSaved(data) {
-      this.$emit("saved", data)
-    },
-    onCancelAction() {
-      this.$emit("cancel")
-    },
   },
 }
 </script>

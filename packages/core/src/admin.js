@@ -26,6 +26,8 @@ const defaultOptions = {
   defaultPerPage: 10,
   defaultItemLabelKey: "name",
   refreshItemBeforeClickAction: true,
+  dateFormat: "YYYY-MM-DD",
+  timeFormat: "HH:mm:ss",
 }
 
 export default class EasyAdmin {
