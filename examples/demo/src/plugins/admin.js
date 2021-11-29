@@ -36,6 +36,7 @@ export default new EasyManage({
     authClient: process.env.VUE_APP_EM_AUTH_CLIENT_ID || "auth-client",
   }),
   options: {
+    title: "EDian Admin",
     defaultActionDisplayMode: "dialog", // dialog drawer page
   },
 })

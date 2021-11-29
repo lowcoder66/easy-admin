@@ -1,5 +1,5 @@
 <template>
-  <component v-if="inputComponent" :is="inputComponent" v-bind="{ ...$attrs, ...$props }" class="mt-0 pt-0" />
+  <component v-if="fieldComponent" :is="fieldComponent" v-bind="{ ...$attrs, ...$props }" class="mt-0 pt-0" />
   <span v-else>{{ formattedValue }}</span>
 </template>
 
@@ -28,20 +28,27 @@ export default {
 
       return finalValue
     },
-    inputComponent() {
-      let input = null
+    fieldComponent() {
+      let component = null
       switch (this.type) {
         case "text":
         case "date":
         case "dateTime":
-          input = null // show as text
+          component = null // text
+          break
+        case "boolean":
+          component = `ea-boolean-input`
+          break
+        case "select":
+        case "autocomplete":
+          component = `ea-select-field`
           break
         default: {
-          return `ea-${this.type}-input`
+          component = `ea-${this.type}-field`
         }
       }
 
-      return input
+      return component
     },
   },
   methods: {},

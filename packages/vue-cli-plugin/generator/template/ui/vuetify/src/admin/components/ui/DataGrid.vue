@@ -137,7 +137,7 @@
     <!-- 根据字段类型渲染 -->
     <template v-for="field in tableFields" v-slot:[`item.${field.source}`]="{ item, value }">
       <slot :name="`field.${field.source}`" v-bind="{ item, value }">
-        <ea-field v-if="field.type" :type="field.type" :value="value" />
+        <ea-field v-if="field.type" :source="field.source" :type="field.type" :value="value" />
         <template v-else>{{ value }}</template>
       </slot>
     </template>

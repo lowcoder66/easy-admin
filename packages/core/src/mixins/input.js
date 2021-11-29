@@ -77,7 +77,7 @@ export default {
         source = `${this.parentSource}.${this.source}`
       }
 
-      let label = this["$admin"].getFieldLabel(this.formState.resource, source)
+      let label = this.formState ? this["$admin"].getFieldLabel(this.formState.resource, source) : null
       if (this.required) {
         return `* ${label}`
       } else {

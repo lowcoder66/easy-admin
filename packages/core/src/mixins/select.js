@@ -14,10 +14,11 @@ export default {
       type: [String, Array, Function],
       default: "value",
     },
+    enumKey: String,
     enums: {
       type: Array,
       default() {
-        let enumKey = `enums.${this.source}`
+        let enumKey = `enums.${this.enumKey || this.source}`
         if (!this.$te(enumKey)) {
           return []
         }

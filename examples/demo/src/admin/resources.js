@@ -65,5 +65,14 @@ export default [
     name: "clients",
     icon: "mdi-certificate",
     api: "/uac/management/clients",
+    actions: [
+      "retrieve",
+      "create",
+      "delete",
+      {
+        name: "update",
+        refreshItem: false,
+      },
+    ],
   },
 ]

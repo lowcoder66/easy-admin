@@ -75,18 +75,28 @@
     "clients": {
       "name": "客户端 | 客户端",
       "fields": {
-        "name": "名称",
-        "code": "代码",
-        "description": "描述",
-        "builtIn": "内置的"
+        "clientId": "ID",
+        "clientName": "名称",
+        "clientSecret": "Secret",
+        "grantTypes": "授权类型",
+        "scopes": "范围",
+        "searchKeyword": "搜索关键字"
       }
     }
   },
   "enums": {
-    "userStatus": [
-      {
-        "LOCKED": "已锁定"
-      }
-    ]
+    "userStatus": {
+      "LOCKED": "已锁定"
+    },
+    "grantTypes": {
+      "authorization_code": "授权码",
+      "client_credentials": "客户端凭证",
+      "implicit": "隐藏式",
+      "password": "密码",
+      "refresh_token": "刷新",
+      "sms_code": "短信验证码",
+      "we_chat": "微信小程序",
+      "we_chat_web": "微信公众号"
+    }
   }
 }
