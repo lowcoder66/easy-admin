@@ -137,7 +137,7 @@
     <!-- 根据字段类型渲染 -->
     <template v-for="field in tableFields" v-slot:[`item.${field.source}`]="{ item, value }">
       <slot :name="`field.${field.source}`" v-bind="{ item, value }">
-        <ea-field v-if="field.type" v-bind="{ ...field, value: value }" />
+        <ea-field v-if="field.type" v-bind="{ ...field, value: value, label: undefined }" />
         <template v-else>{{ value }}</template>
       </slot>
     </template>
@@ -368,7 +368,8 @@ export default {
   },
   mounted() {
     this.listParams.pagination.perPage = this.$admin.options.defaultPerPage
-    this.fetchData()
+    // this.fetchData()
+    // v-data-table 会触发一次 update:options 事件，所以不需要重复执行一次查询
   },
   watch: {
     filter: {
@@ -381,7 +382,6 @@ export default {
         }
         this.fetchData()
       },
-      immediate: true,
     },
   },
 }
