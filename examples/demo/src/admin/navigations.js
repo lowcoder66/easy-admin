@@ -15,6 +15,11 @@ export default (i18n, admin) => [
     text: i18n.t("menu.auth"),
     children: admin.getResourcesNavItems(["accounts", "clients"], { name: "auth" }),
   },
+  {
+    icon: "mdi-layers-triple",
+    text: i18n.t("menu.config"),
+    children: admin.getResourcesNavItems(["properties"], { name: "config" }),
+  },
   { divider: "line" },
   {
     icon: "mdi-view-dashboard",

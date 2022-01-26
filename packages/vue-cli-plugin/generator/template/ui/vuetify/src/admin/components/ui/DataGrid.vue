@@ -32,7 +32,7 @@
               <component
                 v-for="(field, index) in filterableFields"
                 v-model="listParams.filter[field.model || field.source]"
-                :label="field.label"
+                v-bind="{ ...field, chip: false }"
                 :key="index"
                 :is="`ea-${field.type}-input`"
                 hide-details
@@ -105,7 +105,7 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>
-            {{ `已选择 ${selection.length} 项` }}
+            {{ $t("ea.list.selected_tip", { count: selection.length }) }}
           </v-toolbar-title>
           <v-spacer />
           <slot name="bulk.actions" :selection="selection"> </slot>
@@ -137,7 +137,7 @@
     <!-- 根据字段类型渲染 -->
     <template v-for="field in tableFields" v-slot:[`item.${field.source}`]="{ item, value }">
       <slot :name="`field.${field.source}`" v-bind="{ item, value }">
-        <ea-field v-if="field.type" :source="field.source" :type="field.type" :value="value" />
+        <ea-field v-if="field.type" v-bind="{ ...field, value: value }" />
         <template v-else>{{ value }}</template>
       </slot>
     </template>
@@ -179,7 +179,10 @@ export default {
     },
     hideActions: Boolean,
     hideRowActions: Boolean,
-    showSelect: Boolean,
+    showSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

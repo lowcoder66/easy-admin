@@ -11,7 +11,9 @@
     "org_positions": "职位管理",
     "auth": "账户认证",
     "auth_accounts": "账户管理",
-    "auth_clients": "客户端"
+    "auth_clients": "客户端",
+    "config": "配置管理",
+    "config_properties": "配置属性"
   },
   "resources": {
     "authorities": {
@@ -82,6 +84,21 @@
         "scopes": "范围",
         "searchKeyword": "搜索关键字"
       }
+    },
+    "properties": {
+      "name": "配置 | 配置",
+      "fields": {
+        "application": "应用",
+        "profile": "环境",
+        "label": "标签",
+        "key": "键",
+        "value": "值",
+        "createdTime": "创建时间",
+        "lastModifiedTime": "最后更新",
+        "applicationKeyword": "应用关键字",
+        "keyKeyword": "键关键字",
+        "valueKeyword": "值关键字"
+      }
     }
   },
   "enums": {
@@ -97,6 +114,7 @@
       "sms_code": "短信验证码",
       "we_chat": "微信小程序",
       "we_chat_web": "微信公众号"
-    }
+    },
+    "profiles": ["dev", "test", "prod"]
   }
 }

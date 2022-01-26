@@ -24,13 +24,28 @@ export default {
         }
 
         let enums = this.$t(enumKey)
-
-        return Object.keys(enums).map((key) => {
-          return {
-            value: key,
-            text: enums[key],
-          }
-        })
+        if (enums instanceof Array) {
+          return enums.map((item) => {
+            if (typeof item === "string") {
+              return {
+                value: item,
+                text: item,
+              }
+            } else {
+              return {
+                value: item[this.itemValue],
+                text: item[this.itemText],
+              }
+            }
+          })
+        } else {
+          return Object.keys(enums).map((key) => {
+            return {
+              value: key,
+              text: enums[key],
+            }
+          })
+        }
       },
     },
   },

@@ -24,9 +24,7 @@ export default {
     selected() {
       return this.value instanceof Array
         ? (this.options || this.enums).filter((item) => (this.value || []).includes(item[this.itemValue]))
-        : (this.options || this.enums)
-            .filter((item) => item[this.itemValue] === this.value)
-            .map((item) => item[this.itemText])[0] || []
+        : (this.options || this.enums).filter((item) => item[this.itemValue] === this.value) || []
     },
   },
   watch: {

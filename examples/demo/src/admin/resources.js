@@ -75,4 +75,18 @@ export default [
       },
     ],
   },
+  {
+    name: "properties",
+    icon: "mdi-tune",
+    api: "/db-config/management/properties",
+    actions: [
+      "retrieve",
+      "create",
+      "delete",
+      {
+        name: "update",
+        refreshItem: false,
+      },
+    ],
+  },
 ]

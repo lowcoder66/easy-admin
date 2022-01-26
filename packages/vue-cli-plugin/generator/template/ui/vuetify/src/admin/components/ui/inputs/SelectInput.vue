@@ -1,7 +1,7 @@
 <template>
   <v-select
     v-bind="{ ...$attrs, ...commonProps }"
-    chips
+    :chips="chip"
     :multiple="multiple"
     :item-text="itemText"
     :item-value="itemValue"
@@ -21,6 +21,14 @@ import Reference from "@lowcoder/easy-admin/src/mixins/reference"
 
 export default {
   mixins: [Input, Multiple, Select, Reference],
+  props: {
+    chip: {
+      type: Boolean,
+      default() {
+        return true
+      },
+    },
+  },
   async created() {
     if (this.reference) {
       this.options = this.referenceData

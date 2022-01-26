@@ -34,6 +34,7 @@ export default {
         case "text":
         case "date":
         case "dateTime":
+        case "number":
           component = null // text
           break
         case "boolean":

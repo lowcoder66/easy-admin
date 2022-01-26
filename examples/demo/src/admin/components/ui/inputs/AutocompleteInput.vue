@@ -1,7 +1,7 @@
 <template>
   <v-autocomplete
     v-bind="{ ...$attrs, ...commonProps }"
-    chips
+    :chips="chip"
     :multiple="multiple"
     :item-text="itemText"
     :item-value="itemValue"
@@ -12,6 +12,25 @@
     @input="inputUpdate"
     :search-input.sync="searchInput"
   >
+    <template v-slot:selection="data">
+      <v-chip v-if="chip" v-bind="data.attrs" :input-value="data.selected" @click="data.select">
+        {{ labelMode ? data.item[itemValue] : data.item[itemText] }}
+      </v-chip>
+      <span v-else>
+        {{ labelMode ? data.item[itemValue] : data.item[itemText] }}
+      </span>
+    </template>
+    <template v-slot:item="data">
+      <template v-if="!labelMode || typeof data.item !== 'object'">
+        <v-list-item-content>{{ data.item[itemText] }}</v-list-item-content>
+      </template>
+      <template v-else>
+        <v-list-item-content>
+          <v-list-item-title>{{ data.item[itemValue] }}</v-list-item-title>
+          <v-list-item-subtitle>{{ data.item[itemText] }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </template>
+    </template>
   </v-autocomplete>
 </template>
 
@@ -23,6 +42,20 @@ import Reference from "@lowcoder/easy-admin/src/mixins/reference"
 
 export default {
   mixins: [Input, Multiple, Select, Reference],
+  props: {
+    labelMode: {
+      type: Boolean,
+      default() {
+        return false
+      },
+    },
+    chip: {
+      type: Boolean,
+      default() {
+        return true
+      },
+    },
+  },
   async created() {
     if (this.reference) {
       this.options = this.referenceData
@@ -43,13 +76,23 @@ export default {
   },
   computed: {
     selectItems() {
-      let searchInputItem = this.searchInput ? [{ text: this.searchInput, value: this.searchInput }] : []
+      let searchInputItem = []
+      if (this.searchInput) {
+        let item = {}
+        item[this.itemText] = this.searchInput
+        item[this.itemValue] = this.searchInput
+        searchInputItem.push(item)
+      }
       return searchInputItem.concat(this.options || this.enums).concat(this.searchItemsCache)
     },
   },
   methods: {
     filter(item, queryText, itemText) {
-      return itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+      let itemValue = item[this.itemValue]
+      return (
+        (itemValue && itemValue.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1) ||
+        (itemText && itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1)
+      )
     },
     inputUpdate(value) {
       if (value) {
