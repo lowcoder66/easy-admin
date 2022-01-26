@@ -11,3 +11,13 @@ easy-admin
 in `my-project` 
 
 ```vue add @lowcoder/vue-cli-plugin-easy-admin```
+
+# cli
+
+## lerna
+
+### generate docs
+```lerna run docs```
+
+### publish a version
+```lerna publish```
