@@ -8,7 +8,7 @@ import {
   GET_NAME,
   GET_EMAIL,
   GET_PERMISSIONS,
-} from "@edian/easy-admin/src/providers/auth/actions";
+} from "@lowcoder/easy-admin/src/providers/auth/actions";
 
 /**
  * Implement compatible auth provider

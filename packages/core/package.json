@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://git.365edian.com/chenyang/easy-admin.git",
+    "url": "https://github.com/lowcoder66/easy-admin.git",
     "directory": "packages/core"
   },
   "author": "lowcoder <lowcoder66@gmail.com>",
@@ -45,9 +45,5 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "qs": "^6.9.4"
-  },
-  "publishConfig": {
-    "registry": "http://47.111.125.75:8081/repository/npm-hosted/"
-  },
-  "gitHead": "75d05738aa328f4f7b85872f2c4f28d98fda1c21"
+  }
 }

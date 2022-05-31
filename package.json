@@ -6,8 +6,7 @@
   },
   "workspaces": [
     "packages/core",
-    "packages/vue-cli-plugin",
-    "examples/demo"
+    "packages/vue-cli-plugin"
   ],
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

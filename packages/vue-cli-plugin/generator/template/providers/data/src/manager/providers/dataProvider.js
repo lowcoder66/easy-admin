@@ -9,7 +9,7 @@ import {
   UPDATE_MANY,
   DELETE,
   DELETE_MANY,
-} from "@edian/easy-admin/src/providers/data/actions";
+} from "@lowcoder/easy-admin/src/providers/data/actions";
 
 export default (httpClient) => {
   return {
