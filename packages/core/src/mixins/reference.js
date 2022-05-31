@@ -44,10 +44,12 @@ export default {
       let allItems = []
       let currentPage = 1
       let fetchResult = await this.fetchPage(currentPage)
-      allItems = allItems.concat(fetchResult.data)
-      while (!fetchResult.lastPage) {
-        fetchResult = await this.fetchPage(++currentPage)
-        allItems = allItems.concat(fetchResult.data)
+      if (fetchResult) {
+        allItems = allItems.concat(fetchResult.data);
+        while (!fetchResult.lastPage) {
+          fetchResult = await this.fetchPage(++currentPage)
+          allItems = allItems.concat(fetchResult.data)
+        }
       }
 
       this.loading = false

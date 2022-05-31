@@ -49,5 +49,5 @@
   "publishConfig": {
     "registry": "http://47.111.125.75:8081/repository/npm-hosted/"
   },
-  "gitHead": "ecc8f80d7bddc3ff60d402d0d3ca54f30f851710"
+  "gitHead": "75d05738aa328f4f7b85872f2c4f28d98fda1c21"
 }
