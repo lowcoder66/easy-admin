@@ -280,6 +280,7 @@ export default {
             value: field.source,
             sortable: field.sortable,
             align: field.align || this.smartAlign(field),
+            width: field.width || null,
           }
         })
 

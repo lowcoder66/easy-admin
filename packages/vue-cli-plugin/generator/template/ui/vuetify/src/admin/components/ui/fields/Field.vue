@@ -1,5 +1,13 @@
 <template>
   <component v-if="fieldComponent" :is="fieldComponent" v-bind="{ ...$attrs, ...$props }" class="mt-0 pt-0" />
+  <v-tooltip v-else-if="width && omit" bottom max-width="40%" >
+    <template v-slot:activator="{ on, attrs }">
+      <div class="text-omit" :style="{width}" v-bind="attrs" v-on="on" >
+        {{ formattedValue }}
+      </div>
+    </template>
+    <span>{{ formattedValue }}</span>
+  </v-tooltip>
   <span v-else>{{ formattedValue }}</span>
 </template>
 
@@ -12,6 +20,12 @@ export default {
     type: {
       type: String,
       default: "text",
+    },
+    omit: {
+      type: Boolean,
+    },
+    width: {
+      type: [String, Number],
     },
   },
   computed: {
@@ -55,3 +69,11 @@ export default {
   methods: {},
 }
 </script>
+
+<style scoped>
+.text-omit {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+</style>
