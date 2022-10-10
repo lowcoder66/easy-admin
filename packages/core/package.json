@@ -19,7 +19,9 @@
     "directory": "packages/core"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "author": "lowcoder <lowcoder66@gmail.com>",
   "license": "MIT",
@@ -48,5 +50,6 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "qs": "^6.9.4"
-  }
+  },
+  "gitHead": "765a368e460400584b2bd3f6a6f8c664735541d8"
 }

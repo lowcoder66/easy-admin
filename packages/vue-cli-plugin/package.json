@@ -21,7 +21,8 @@
     "directory": "packages/vue-cli-plugin"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "author": "lowcoder <lowcoder66@gmail.com>",
   "license": "MIT",
@@ -40,5 +41,6 @@
     "@vue/cli-service": "^4.5.13",
     "vue-cli-plugin-vuetify": "^2.4.2",
     "vuetify-loader": "^1.7.3"
-  }
+  },
+  "gitHead": "765a368e460400584b2bd3f6a6f8c664735541d8"
 }
