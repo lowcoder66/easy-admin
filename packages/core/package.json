@@ -20,7 +20,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "author": "lowcoder <lowcoder66@gmail.com>",
