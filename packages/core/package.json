@@ -1,5 +1,5 @@
 {
-  "name": "@lowcoder/easy-admin",
+  "name": "@lowcoder66/easy-admin",
   "version": "0.0.8",
   "description": "Admin framework for Vue.js",
   "main": "dist/admin.common.js",

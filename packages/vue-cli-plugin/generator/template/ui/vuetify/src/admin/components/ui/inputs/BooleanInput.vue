@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Input from "@lowcoder/easy-admin/src/mixins/input"
+import Input from "@lowcoder66/easy-admin/src/mixins/input"
 export default {
   mixins: [Input],
   props: {

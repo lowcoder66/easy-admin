@@ -26,7 +26,7 @@ function extendPackage(api) {
       "vue-i18n": "^8.25.1",
       "vue-router": "^3.5.2",
       axios: "^0.21.4",
-      "@lowcoder/easy-admin": "^0.0.7",
+      "@lowcoder66/easy-admin": "^0.0.7",
     },
     devDependencies: {
       webpack: "^5.52.1",

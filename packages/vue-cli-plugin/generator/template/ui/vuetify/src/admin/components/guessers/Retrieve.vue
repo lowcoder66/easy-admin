@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
+import { guessInputs } from "@lowcoder66/easy-admin/src/utils/guesser"
 
 export default {
   props: ["resource", "title", "action"],

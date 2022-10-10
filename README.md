@@ -10,7 +10,7 @@ easy-admin
 ### use the cli plugin
 in `my-project` 
 
-```vue add @lowcoder/vue-cli-plugin-easy-admin```
+```vue add @lowcoder66/vue-cli-plugin-easy-admin```
 
 # cli
 

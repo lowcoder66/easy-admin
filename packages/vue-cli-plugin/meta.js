@@ -46,7 +46,7 @@ getDocComponents().then((docs) => {
     writeJsonFile(metaDir, "web-types.json", {
       $schema: "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
       framework: "vue",
-      name: "@lowcoder/easy-admin",
+      name: "@lowcoder66/easy-admin",
       version: "0.0.1",
       contributions: {
         html: {

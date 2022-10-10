@@ -145,7 +145,7 @@
 </template>
 
 <script>
-import Resource from "@lowcoder/easy-admin/src/mixins/resource"
+import Resource from "@lowcoder66/easy-admin/src/mixins/resource"
 import CreateButton from "./buttons/CreateButton"
 import UpdateButton from "./buttons/UpdateButton"
 import ShowButton from "./buttons/ShowButton"

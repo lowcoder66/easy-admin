@@ -9,7 +9,7 @@ import {
   UPDATE_MANY,
   DELETE,
   DELETE_MANY,
-} from "@lowcoder/easy-admin/src/providers/data/actions";
+} from "@lowcoder66/easy-admin/src/providers/data/actions"
 
 export default (httpClient) => {
   return {
@@ -19,13 +19,9 @@ export default (httpClient) => {
     [CREATE]: (resource, params) => ({ data: {} }),
     [UPDATE]: (resource, params) => ({ data: {} }),
     [UPDATE_MANY]: (resource, params) =>
-      Promise.all(params.ids.map((id) => Promise.resolve())).then(() =>
-        Promise.resolve()
-      ),
+      Promise.all(params.ids.map((id) => Promise.resolve())).then(() => Promise.resolve()),
     [DELETE]: (resource, params) => Promise.resolve(),
     [DELETE_MANY]: (resource, params) =>
-      Promise.all(params.ids.map((id) => Promise.resolve())).then(() =>
-        Promise.resolve()
-      ),
-  };
-};
+      Promise.all(params.ids.map((id) => Promise.resolve())).then(() => Promise.resolve()),
+  }
+}

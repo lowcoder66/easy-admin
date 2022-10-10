@@ -1,5 +1,5 @@
 import Vue from "vue"
-import EasyManage from "@lowcoder/easy-admin"
+import EasyManage from "@lowcoder66/easy-admin"
 
 import resources from "../admin/resources"
 import routes from "../admin/routes"
@@ -22,8 +22,8 @@ import {
     <%_ if (authProvider && authProvider !== "custom") { _%>
     <%- authProvider %>AuthProvider,
     <%_ } _%>
-} from "@lowcoder/easy-admin/src/providers";
-import { AxiosHttp } from "@lowcoder/easy-admin/src/providers";
+} from "@lowcoder66/easy-admin/src/providers";
+import { AxiosHttp } from "@lowcoder66/easy-admin/src/providers";
 
 Vue.use(EasyManage);
 

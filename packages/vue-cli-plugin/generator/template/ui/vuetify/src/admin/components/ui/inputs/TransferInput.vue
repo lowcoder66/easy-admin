@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import Input from "@lowcoder/easy-admin/src/mixins/input"
-import Reference from "@lowcoder/easy-admin/src/mixins/reference"
+import Input from "@lowcoder66/easy-admin/src/mixins/input"
+import Reference from "@lowcoder66/easy-admin/src/mixins/reference"
 export default {
   mixins: [Input, Reference],
   props: {

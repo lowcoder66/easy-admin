@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import ActionButton from "@lowcoder/easy-admin/src/mixins/action-button"
+import ActionButton from "@lowcoder66/easy-admin/src/mixins/action-button"
 import upperFirst from "lodash/upperFirst"
 import { camelCase } from "lodash/string"
 

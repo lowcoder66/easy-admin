@@ -8,7 +8,7 @@ import {
   GET_NAME,
   GET_EMAIL,
   GET_PERMISSIONS,
-} from "@lowcoder/easy-admin/src/providers/auth/actions";
+} from "@lowcoder66/easy-admin/src/providers/auth/actions"
 
 /**
  * Implement compatible auth provider
@@ -22,5 +22,5 @@ export default (httpClient) => {
     [GET_NAME]: (u) => u.name,
     [GET_EMAIL]: (u) => u.email,
     [GET_PERMISSIONS]: (u) => u.permissions,
-  };
-};
+  }
+}

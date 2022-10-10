@@ -19,7 +19,7 @@
 
 <script>
 import ResourceForm from "../../mixins/resource-form"
-import { guessInputs } from "@lowcoder/easy-admin/src/utils/guesser"
+import { guessInputs } from "@lowcoder66/easy-admin/src/utils/guesser"
 
 export default {
   mixins: [ResourceForm],

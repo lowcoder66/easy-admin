@@ -1,8 +1,8 @@
 <template>
   <component v-if="fieldComponent" :is="fieldComponent" v-bind="{ ...$attrs, ...$props }" class="mt-0 pt-0" />
-  <v-tooltip v-else-if="width && omit" bottom max-width="40%" >
+  <v-tooltip v-else-if="width && omit" bottom max-width="40%">
     <template v-slot:activator="{ on, attrs }">
-      <div class="text-omit" :style="{width}" v-bind="attrs" v-on="on" >
+      <div class="text-omit" :style="{ width }" v-bind="attrs" v-on="on">
         {{ formattedValue }}
       </div>
     </template>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Field from "@lowcoder/easy-admin/src/mixins/field"
-import { formatDate, formatDateTime } from "@lowcoder/easy-admin/src/utils/dateUtils"
+import Field from "@lowcoder66/easy-admin/src/mixins/field"
+import { formatDate, formatDateTime } from "@lowcoder66/easy-admin/src/utils/dateUtils"
 export default {
   mixins: [Field],
   props: {

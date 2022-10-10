@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import Input from "@lowcoder/easy-admin/src/mixins/input"
-import { formatDate, parseDate } from "@lowcoder/easy-admin/src/utils/dateUtils"
+import Input from "@lowcoder66/easy-admin/src/mixins/input"
+import { formatDate, parseDate } from "@lowcoder66/easy-admin/src/utils/dateUtils"
 
 export default {
   mixins: [Input],
