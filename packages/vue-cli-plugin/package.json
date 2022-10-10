@@ -20,6 +20,9 @@
     "url": "https://github.com/lowcoder66/easy-admin.git",
     "directory": "packages/vue-cli-plugin"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "lowcoder <lowcoder66@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/lowcoder66/easy-admin.git",
