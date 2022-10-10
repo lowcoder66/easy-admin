@@ -39,7 +39,7 @@
     "@lowcoder66/easy-admin": "^1.0.0",
     "@vue/cli-plugin-router": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
-    "vue-cli-plugin-vuetify": "^2.4.2",
+    "vue-cli-plugin-vuetify": "^2.5.8",
     "vuetify-loader": "^1.7.3"
   },
   "gitHead": "ab40788ae858968478b0959201fd6c8a6f426414"

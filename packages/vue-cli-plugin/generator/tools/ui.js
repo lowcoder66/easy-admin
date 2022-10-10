@@ -6,7 +6,7 @@ function invokeDependency(api, options) {
 
   switch (ui) {
     case "vuetify":
-      require("child_process").spawnSync(vueCmd, ["invoke", "vue-cli-plugin-vuetify", "--preset", "default"], {
+      require("child_process").spawnSync(vueCmd, ["invoke", "vue-cli-plugin-vuetify", "--install", "default"], {
         stdio: "inherit",
         cwd: process.cwd(),
       })
@@ -41,7 +41,7 @@ function render(api, options) {
     case "vuetify":
       api.extendPackage({
         devDependencies: {
-          "vue-cli-plugin-vuetify": "^2.4.2",
+          "vue-cli-plugin-vuetify": "^2.5.8",
         },
       })
       api.render("../template/ui/vuetify", {
