@@ -1,6 +1,6 @@
 {
   "name": "@lowcoder/easy-admin",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Admin framework for Vue.js",
   "main": "dist/admin.common.js",
   "module": "src/index.js",
