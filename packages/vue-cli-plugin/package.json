@@ -1,6 +1,6 @@
 {
   "name": "@lowcoder66/vue-cli-plugin-easy-admin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue CLI plugin for Easy Admin",
   "main": "index.js",
   "keywords": [
