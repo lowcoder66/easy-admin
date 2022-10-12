@@ -118,7 +118,8 @@ export default {
       this.formState.saving = true
 
       try {
-        let { data } = await this.postSave(this.id, this.formState.model)
+        let res = await this.postSave(this.id, this.formState.model)
+        let data = res && res.data
 
         this.reset()
         this.$emit("saved", data)

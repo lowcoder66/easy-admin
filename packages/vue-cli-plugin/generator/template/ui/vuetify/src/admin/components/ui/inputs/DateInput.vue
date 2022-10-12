@@ -5,7 +5,7 @@
         :value="dateFormatted"
         prepend-inner-icon="mdi-calendar"
         readonly
-        v-bind="{ ...$attrs, ...commonProps, ...attrs }"
+        v-bind="{ ...$attrs, ...commonProps, ...attrs, type: null }"
         v-on="on"
       ></v-text-field>
     </template>
@@ -41,13 +41,13 @@ export default {
     },
     getDate() {
       let date = parseDate(this.input)
-      return date ? formatDate(this.input, "YYYY-MM-DD") : null
+      return date ? formatDate(this.input, this.format) : null
     },
   },
   methods: {
     inputDate(val) {
       this.menu = false
-      this.update(parseDate(val).getTime())
+      this.update(formatDate(parseDate(val), this.dateFormat))
     },
   },
 }

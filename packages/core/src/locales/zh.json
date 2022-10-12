@@ -60,5 +60,8 @@
     "expand_filter": "展开过滤",
     "reset_filter": "重置过滤",
     "selected_tip": "已选择 {count} 项"
+  },
+  "select": {
+    "others": "其他项"
   }
 }

@@ -16,7 +16,7 @@
     <v-card-actions v-if="!readonlyForm">
       <v-spacer></v-spacer>
       <EaResetButton text />
-      <EaSaveButton text />
+      <EaSaveButton text :label="saveBtnLabel" />
     </v-card-actions>
   </v-card>
 </template>
@@ -30,6 +30,9 @@ export default {
       type: String,
       validator: (v) => ["page", "dialog", "drawer"].includes(v),
       default: "page",
+    },
+    saveBtnLabel: {
+      type: String,
     },
   },
   provide() {

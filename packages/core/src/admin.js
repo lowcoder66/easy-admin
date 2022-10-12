@@ -1,12 +1,12 @@
 import storeAppModule from "./store/app"
 import {
+  actionLink,
   completeResourcesObject,
-  resourceNavItems,
-  resourceRoutes,
-  hasActionPermission,
   getActionTitle,
   getResourceTitle,
-  actionLink,
+  hasActionPermission,
+  resourceNavItems,
+  resourceRoutes,
 } from "./resources"
 import resourceCrudModule from "./store/resource"
 import authStore from "./store/auth"
@@ -28,6 +28,7 @@ const defaultOptions = {
   refreshItemBeforeClickAction: true,
   dateFormat: "YYYY-MM-DD",
   timeFormat: "HH:mm:ss",
+  dateTimeFormat: "YYYY-MM-DD HH:mm:ss",
 }
 
 export default class EasyAdmin {

@@ -12,7 +12,17 @@ export default {
         let rules = []
 
         if (this.required) {
-          rules.push((v) => !!v || this.$t("ea.hints.required", { field: this.inputLabel }))
+          rules.push((v) => {
+            let hasVal
+            if (typeof v === "undefined" || v === null) {
+              hasVal = false
+            } else if (typeof v === "boolean" || typeof v === "number") {
+              hasVal = true
+            } else {
+              hasVal = !!v
+            }
+            return hasVal || this.$t("ea.hints.required", { field: this.inputLabel })
+          })
         }
         return rules
       },

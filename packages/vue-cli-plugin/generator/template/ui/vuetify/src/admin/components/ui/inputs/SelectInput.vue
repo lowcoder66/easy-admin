@@ -10,6 +10,18 @@
     @change="change"
     @input="update"
   >
+    <template v-if="multiple && maxShowCount" v-slot:selection="{ item, index }">
+      <template v-if="index <= maxShowCount-1">
+        <v-chip v-if="chip" >
+          <span>{{ getItemText(item) + ", "}}</span>
+        </v-chip>
+        <span v-else>{{ getItemText(item) + ", " }}</span>
+      </template>
+
+      <span v-if="index === maxShowCount" class="grey--text text-caption" >
+        (+{{ value.length - maxShowCount }} {{ $i18n.te('ea.select.other') ? $i18n.t('ea.select.other') : 'others' }})
+      </span>
+    </template>
   </v-select>
 </template>
 
@@ -28,6 +40,9 @@ export default {
         return true
       },
     },
+    maxShowCount: {
+      type: Number,
+    },
   },
   async created() {
     if (this.reference) {
@@ -39,6 +54,22 @@ export default {
       if (val && this.reference) {
         this.options = val
       }
+    },
+  },
+  methods: {
+    getItemText(item) {
+      if (item) {
+        if (typeof item === 'string') {
+          return item;
+        }
+        if (this.itemText instanceof Function) {
+          return this.itemText(item);
+        }
+        if (typeof this.itemText === 'string') {
+          return item[this.itemText];
+        }
+      }
+      return item;
     },
   },
 }

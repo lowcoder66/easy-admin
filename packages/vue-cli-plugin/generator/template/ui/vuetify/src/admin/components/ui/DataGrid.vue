@@ -41,7 +41,7 @@
           </v-sheet>
         </template>
         <template v-if="filterExpanded">
-          <v-btn icon @click="filterExpanded = false">
+          <v-btn v-if="filterBarCanCollapse" icon @click="filterExpanded = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>
@@ -228,6 +228,9 @@ export default {
     filterableFields() {
       return this.tableFields.filter((f) => f.filterable)
     },
+    filterBarCanCollapse() {
+      return this.filterableFields.some(ff => ff.type === "text");
+    },
     singleDisplayFilterField() {
       if (this.filterableFields) {
         let fieldSourceWeight = (source) => {
@@ -253,11 +256,11 @@ export default {
 
         let sorted = [...this.filterableFields].sort((f1, f2) => {
           let aSourceWeight = fieldSourceWeight(f1.source),
-            bSourceWeight = fieldSourceWeight(f2.source)
+              bSourceWeight = fieldSourceWeight(f2.source)
           return aSourceWeight === bSourceWeight
-            ? fieldTypeWeight(f1.type) - fieldTypeWeight(f1.type)
-            : aSourceWeight - bSourceWeight
-        })
+              ? fieldTypeWeight(f1.type) - fieldTypeWeight(f1.type)
+              : aSourceWeight - bSourceWeight
+        }).filter(f => f.type === "text");
         let filteredFields = sorted.filter((f) => Object.keys(this.listParams.filter).includes(f.source))
 
         if (filteredFields.length > 0) {
@@ -371,6 +374,9 @@ export default {
     this.listParams.pagination.perPage = this.$admin.options.defaultPerPage
     // this.fetchData()
     // v-data-table 会触发一次 update:options 事件，所以不需要重复执行一次查询
+
+    // if don't have text filterable fields, expand filter bar
+    this.filterExpanded = this.filterableFields.length > 0 && !this.singleDisplayFilterField;
   },
   watch: {
     filter: {
@@ -392,21 +398,21 @@ export default {
 @import '~vuetify/src/styles/styles.sass'
 
 .data-table-row-actions
-  ::v-deep button,a
+  :deep( button,a)
     &:not(a:last-of-type)
       margin-right: $spacer
     &:not(button:last-of-type)
       margin-right: $spacer
 
 .data-table-actions
-  ::v-deep button,a
+  :deep( button,a)
     &:not(a:last-of-type)
       margin-right: $spacer
     &:not(button:last-of-type)
       margin-right: $spacer
 
 .filters-wrapper
-  ::v-deep >*
-    max-width: 200px
+  :deep( >*)
+    max-width: 250px
     margin: 0 $spacer * 2 $spacer * 5 $spacer * 2
 </style>

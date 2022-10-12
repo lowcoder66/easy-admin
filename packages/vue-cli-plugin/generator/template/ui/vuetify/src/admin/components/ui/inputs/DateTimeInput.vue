@@ -53,7 +53,7 @@
 
 <script>
 import Input from "@lowcoder66/easy-admin/src/mixins/input"
-import { formatDate, parseDate } from "@lowcoder66/easy-admin/src/utils/dateUtils"
+import {formatDate, parseDate} from "@lowcoder66/easy-admin/src/utils/dateUtils"
 
 export default {
   mixins: [Input],
@@ -73,6 +73,12 @@ export default {
         return this.$admin.options.timeFormat
       },
     },
+    dateTimeFormat: {
+      type: String,
+      default() {
+        return this.$admin.options.dateTimeFormat
+      },
+    },
   },
   data() {
     return {
@@ -89,21 +95,21 @@ export default {
     },
     datePart() {
       let date = parseDate(this.input)
-      return date ? formatDate(this.input, "YYYY-MM-DD") : null
+      return date ? formatDate(this.input, this.dateFormat) : null
     },
     timePart() {
       let date = parseDate(this.input)
-      return date ? formatDate(this.input, "hh:mm:ss") : null
+      return date ? formatDate(this.input, this.timeFormat) : null
     },
   },
   methods: {
     updateDate(val) {
       this.dateMenu = false
-      this.update(parseDate(val + " " + this.timePart).getTime())
+      this.update(formatDate(parseDate(val + " " + this.timePart), this.dateFormat))
     },
     updateTime(val) {
       //this.timeMenu = false
-      this.update(parseDate(this.datePart + " " + val).getTime())
+      this.update(formatDate(parseDate(this.datePart + " " + val), this.dateTimeFormat))
     },
   },
 }
