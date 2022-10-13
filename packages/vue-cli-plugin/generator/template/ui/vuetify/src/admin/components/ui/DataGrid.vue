@@ -9,6 +9,9 @@
     :server-items-length="totalItems"
     :multi-sort="multiSort"
     @update:options="handleOptionsUpdate"
+    :footer-props="{
+      showFirstLastPage: true,
+    }"
   >
     <!-- 表头 -->
     <template v-slot:top>

@@ -76,7 +76,7 @@ export default (
   // request header
   axios.interceptors.request.use(function (config) {
     let token = params.getToken()
-    let authenticated = config["authenticated"] || true
+    let authenticated = config["authenticated"]
     if (authenticated && token && token["access_token"]) {
       config.headers["Authorization"] = `Bearer ${token["access_token"]}`
     }

@@ -11,15 +11,15 @@
     @input="update"
   >
     <template v-if="multiple && maxShowCount" v-slot:selection="{ item, index }">
-      <template v-if="index <= maxShowCount-1">
-        <v-chip v-if="chip" >
-          <span>{{ getItemText(item) + ", "}}</span>
+      <template v-if="index <= maxShowCount - 1">
+        <v-chip v-if="chip">
+          <span>{{ getItemText(item) + ", " }}</span>
         </v-chip>
         <span v-else>{{ getItemText(item) + ", " }}</span>
       </template>
 
-      <span v-if="index === maxShowCount" class="grey--text text-caption" >
-        (+{{ value.length - maxShowCount }} {{ $i18n.te('ea.select.other') ? $i18n.t('ea.select.other') : 'others' }})
+      <span v-if="index === maxShowCount" class="grey--text text-caption">
+        (+{{ value.length - maxShowCount }} {{ $i18n.te("ea.select.others") ? $i18n.t("ea.select.others") : "others" }})
       </span>
     </template>
   </v-select>
@@ -59,17 +59,17 @@ export default {
   methods: {
     getItemText(item) {
       if (item) {
-        if (typeof item === 'string') {
-          return item;
+        if (typeof item === "string") {
+          return item
         }
         if (this.itemText instanceof Function) {
-          return this.itemText(item);
+          return this.itemText(item)
         }
-        if (typeof this.itemText === 'string') {
-          return item[this.itemText];
+        if (typeof this.itemText === "string") {
+          return item[this.itemText]
         }
       }
-      return item;
+      return item
     },
   },
 }

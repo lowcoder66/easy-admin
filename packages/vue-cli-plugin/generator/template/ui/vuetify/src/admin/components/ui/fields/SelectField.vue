@@ -1,6 +1,8 @@
 <template>
   <v-sheet class="selected-chips">
-    <v-chip small outlined v-for="(item, index) in selected" :key="index">{{ item[itemText] }}</v-chip>
+    <v-chip v-for="(item, index) in selected" :key="index" v-bind="{ ...defChipsAttr, ...chipsAttr }">{{
+      item[itemText]
+    }}</v-chip>
   </v-sheet>
 </template>
 
@@ -14,6 +16,19 @@ export default {
   props: {
     chip: Boolean,
     value: [String, Array],
+    chipsAttr: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
+  data() {
+    return {
+      defChipsAttr: {
+        small: true,
+      },
+    }
   },
   async created() {
     if (this.reference) {
