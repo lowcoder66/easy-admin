@@ -17,11 +17,19 @@ export const completeResourcesObject = (resources = [], admin) => {
       }
       actions = completeActionsObject(actions, admin)
 
+      // parents
+      let parents = []
+      if (r.parents) {
+        parents = [...r.parents]
+      }
+      parents = completeParentsObject(parents, admin)
+
       // resource object
       return {
         ...r,
         icon: r.icon || admin.options.defaultResourceIcon,
         actions,
+        parents,
       }
     })
 }
@@ -102,6 +110,20 @@ const completeActionsObject = (actions, admin) => {
         a.name &&
         (admin.options.defaultActions.includes(a.name) || (admin.options.enableOperateAction && a.name === "operate"))
     )
+}
+const completeParentsObject = (parents, admin) => {
+  return parents.map((p) => {
+    let parentObj
+    if (typeof p === "string") {
+      parentObj = {
+        name: p,
+        field: camelCase(`${p}_${admin.options.defaultIdKey || "id"}`),
+      }
+    } else {
+      parentObj = p
+    }
+    return parentObj
+  })
 }
 const validPermissions = (permissions, admin) => {
   return (

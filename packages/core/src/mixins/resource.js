@@ -20,5 +20,8 @@ export default {
     currentAction() {
       return this["$admin"].getAction(this.resource, this.action)
     },
+    parentsItems() {
+      return this.$store.state[this.resource].parents
+    },
   },
 }

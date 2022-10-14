@@ -338,17 +338,23 @@ export default {
       this.fetchData()
     },
     async fetchData() {
-      this.loading = true
-      let { sort, filter, pagination } = this.listParams
-      let { data, total } = await this.$store.dispatch(`${this.resource}/getList`, {
-        sort,
-        filter,
-        pagination,
-      })
+      const resourceParents = this.$admin.getResource(this.resource).parents
+      if (!resourceParents || resourceParents.some(p => !this.parentsItems[p.name])) {
+        this.items = []
+        this.totalItems = 0
+      } else {
+        this.loading = true
+        let { sort, filter, pagination, } = this.listParams
+        let { data, total } = await this.$store.dispatch(`${this.resource}/getList`, {
+          sort,
+          filter,
+          pagination,
+        })
 
-      this.totalItems = total
-      this.items = data
-      this.loading = false
+        this.totalItems = total
+        this.items = data
+        this.loading = false
+      }
     },
     handleFilterFieldKeydown(ke) {
       // when keyCode equals 13, exec filter
@@ -390,6 +396,12 @@ export default {
           this.listParams.filter = {}
           this.listParams.pagination.page = 1
         }
+        this.fetchData()
+      },
+    },
+    parentsItems: {
+      handler() {
+        this.listParams.pagination.page = 1
         this.fetchData()
       },
     },

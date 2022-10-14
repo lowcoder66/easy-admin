@@ -23,6 +23,7 @@ const defaultOptions = {
   defaultHasPermission: true, // true false
   defaultActions: ["create", "delete", "update", "retrieve", "show"],
   enableOperateAction: true,
+  defaultIdKey: "id",
   defaultPerPage: 10,
   defaultItemLabelKey: "name",
   refreshItemBeforeClickAction: true,
@@ -172,6 +173,7 @@ export default class EasyAdmin {
             provider: this.dataProvider,
             resource,
             i18n,
+            options: this.options,
           })
         )
       )

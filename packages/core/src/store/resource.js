@@ -1,8 +1,8 @@
 import * as methods from "../providers/data/actions"
 
 let storeActions = {}
-export default ({ provider, resource, i18n }) => {
-  let { name, api } = resource
+export default ({ provider, resource, i18n, options }) => {
+  let { name, api, parents } = resource
 
   Object.values(methods).forEach(
     (action) =>
@@ -16,7 +16,18 @@ export default ({ provider, resource, i18n }) => {
             throw new Error(`Data provider action '${action}' not implemented`)
           }
 
-          let response = await provider[action](api || name, {
+          let resourceApi = api || name
+          if (parents) {
+            parents.forEach((parent) => {
+              let { name: parentResource, field } = parent
+              const parentItem = state.parents[parentResource]
+              if (parentItem) {
+                resourceApi = api.replace(`{${field}}`, encodeURIComponent(String(parentItem[options.defaultIdKey])))
+              }
+            })
+          }
+
+          let response = await provider[action](resourceApi, {
             locale: state.locale,
             ...params,
           })
@@ -33,6 +44,7 @@ export default ({ provider, resource, i18n }) => {
     state: {
       item: null,
       locale: i18n.locale,
+      parents: {},
     },
     mutations: {
       setItem(state, item) {
@@ -40,6 +52,10 @@ export default ({ provider, resource, i18n }) => {
       },
       removeItem(state) {
         state.item = null
+      },
+      setParent(state, parent) {
+        let { name, item } = parent
+        state.parents = { ...state.parents, [name]: item }
       },
     },
     actions: {
