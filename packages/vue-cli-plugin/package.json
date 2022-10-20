@@ -1,6 +1,6 @@
 {
   "name": "@lowcoder66/vue-cli-plugin-easy-admin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Vue CLI plugin for Easy Admin",
   "main": "index.js",
   "keywords": [
@@ -36,7 +36,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@lowcoder66/easy-admin": "^1.0.3",
+    "@lowcoder66/easy-admin": "^1.0.4",
     "@vue/cli-plugin-router": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "vue-cli-plugin-vuetify": "^2.5.8",
