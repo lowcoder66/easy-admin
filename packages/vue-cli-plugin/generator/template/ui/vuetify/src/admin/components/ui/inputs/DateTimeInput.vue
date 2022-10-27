@@ -15,6 +15,7 @@
             readonly
             v-bind="{ ...$attrs, ...commonProps, ...attrs }"
             v-on="on"
+            @input="innerTextFieldUpdate"
           ></v-text-field>
         </template>
         <v-date-picker :value="datePart" @change="change" @input="updateDate"></v-date-picker>
@@ -35,6 +36,7 @@
             readonly
             v-bind="{ ...$attrs, ...commonProps, ...attrs, label: null }"
             v-on="on"
+            @input="innerTextFieldUpdate"
           ></v-text-field>
         </template>
         <v-time-picker
@@ -110,6 +112,9 @@ export default {
     updateTime(val) {
       //this.timeMenu = false
       this.update(formatDate(parseDate(this.datePart + " " + val), this.dateTimeFormat))
+    },
+    innerTextFieldUpdate(val) {
+      this.update(val);
     },
   },
 }
