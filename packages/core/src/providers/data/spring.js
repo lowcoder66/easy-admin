@@ -141,7 +141,7 @@ export default (httpClient) => {
       }
       resourceUrl += `?${params.operateKey}`
 
-      httpClient.post(resourceUrl, params.data)
+      return httpClient.post(resourceUrl, params.data)
     },
   }
 }
