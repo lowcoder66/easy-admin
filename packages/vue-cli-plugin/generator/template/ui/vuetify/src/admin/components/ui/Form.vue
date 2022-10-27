@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" @submit.prevent="onSubmit">
-    <slot></slot>
+    <slot v-bind:model="formState.model" ></slot>
   </v-form>
 </template>
 
