@@ -65,7 +65,8 @@
     "others": "其他项"
   },
   "array": {
-    "empty": "没有子项"
+    "empty": "没有子项",
+    "count": "已添加 {count} 项"
   }
 
 }
