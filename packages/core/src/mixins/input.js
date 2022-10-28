@@ -74,6 +74,14 @@ export default {
   },
   computed: {
     inputLabel() {
+      let label = this.inputLabelWithoutRequiredTag;
+      if (this.required) {
+        return `* ${label}`
+      } else {
+        return label
+      }
+    },
+    inputLabelWithoutRequiredTag() {
       if (this.label) {
         return this.label
       }
@@ -87,12 +95,7 @@ export default {
         source = `${this.parentSource}.${this.source}`
       }
 
-      let label = this.formState ? this["$admin"].getFieldLabel(this.formState.resource, source) : null
-      if (this.required) {
-        return `* ${label}`
-      } else {
-        return label
-      }
+      return this.formState ? this["$admin"].getFieldLabel(this.formState.resource, source) : null
     },
     uniqueSourceId() {
       return [this.parentSource, this.index, this.source].filter((s) => s !== undefined).join(".")

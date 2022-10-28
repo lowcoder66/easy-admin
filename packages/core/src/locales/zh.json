@@ -63,5 +63,9 @@
   },
   "select": {
     "others": "其他项"
+  },
+  "array": {
+    "empty": "没有子项"
   }
+
 }

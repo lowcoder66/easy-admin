@@ -144,7 +144,20 @@ export default class EasyAdmin {
     }
     this.getFieldLabel = (resource, field) => {
       let key = `resources.${resource}.fields.${field}`
-      return i18n.te(key) ? i18n.t(key) : startCase(field.replace(".", " "))
+      let label = null;
+      if (i18n.te(key)) {
+        const result = i18n.t(key);
+        if (typeof result === 'object' && result.fieldName) {
+          label = result.fieldName
+        } else {
+          label = result;
+        }
+      }
+      if (!label) {
+        label = startCase(field.replace(".", " "));
+      }
+
+      return label;
     }
     this.getResourceItemLabel = (resource, item) => {
       let itemLabelKey = null,
