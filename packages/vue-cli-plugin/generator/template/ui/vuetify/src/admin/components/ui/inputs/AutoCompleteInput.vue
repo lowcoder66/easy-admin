@@ -10,24 +10,25 @@
     :filter="filter"
     @change="change"
     @input="inputUpdate"
+    :auto-select-first="directlyInput"
     :search-input.sync="searchInput"
   >
     <template v-slot:selection="data">
       <v-chip v-if="chip" v-bind="data.attrs" :input-value="data.selected" @click="data.select">
-        {{ labelMode ? data.item[itemValue] : data.item[itemText] }}
+        {{ labelMode ? getItemValue(data.item) : getItemLabel(data.item) }}
       </v-chip>
       <span v-else>
-        {{ labelMode ? data.item[itemValue] : data.item[itemText] }}
+        {{ labelMode ? getItemValue(data.item) : getItemLabel(data.item) }}
       </span>
     </template>
     <template v-slot:item="data">
       <template v-if="!labelMode || typeof data.item !== 'object'">
-        <v-list-item-content>{{ data.item[itemText] }}</v-list-item-content>
+        <v-list-item-content>{{ getItemLabel(data.item) }}</v-list-item-content>
       </template>
       <template v-else>
         <v-list-item-content>
-          <v-list-item-title>{{ data.item[itemValue] }}</v-list-item-title>
-          <v-list-item-subtitle>{{ data.item[itemText] }}</v-list-item-subtitle>
+          <v-list-item-title>{{ getItemValue(data.item) }}</v-list-item-title>
+          <v-list-item-subtitle>{{ getItemLabel(data.item) }}</v-list-item-subtitle>
         </v-list-item-content>
       </template>
     </template>
@@ -55,6 +56,12 @@ export default {
         return true
       },
     },
+    directlyInput: {
+      type: Boolean,
+      default() {
+        return true
+      },
+    },
   },
   async created() {
     if (this.reference) {
@@ -77,18 +84,21 @@ export default {
   computed: {
     selectItems() {
       let searchInputItem = []
-      if (this.searchInput) {
+      if (this.directlyInput && this.searchInput) {
         let item = {}
         item[this.itemText] = this.searchInput
         item[this.itemValue] = this.searchInput
         searchInputItem.push(item)
       }
-      return searchInputItem.concat(this.options || this.enums).concat(this.searchItemsCache)
+      if (this.directlyInput) {
+        searchInputItem = searchInputItem.concat(this.searchItemsCache)
+      }
+      return searchInputItem.concat(this.options || this.enums)
     },
   },
   methods: {
     filter(item, queryText, itemText) {
-      let itemValue = item[this.itemValue]
+      let itemValue = this.getItemValue(item)
       return (
         (itemValue && itemValue.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1) ||
         (itemText && itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1)

@@ -49,5 +49,34 @@ export default {
       },
     },
   },
-  methods: {},
+  methods: {
+    getItemValue(item) {
+      if (item) {
+        if (typeof item === "string") {
+          return item
+        } else {
+          if (typeof this.itemValue === "string") {
+            return item[this.itemValue]
+          } else if (this.itemValue instanceof Function) {
+            return this.itemValue(item)
+          }
+        }
+      }
+      return null
+    },
+    getItemLabel(item) {
+      if (item) {
+        if (typeof item === "string") {
+          return item
+        } else {
+          if (typeof this.itemText === "string") {
+            return item[this.itemText]
+          } else if (this.itemText instanceof Function) {
+            return this.itemText(item)
+          }
+        }
+      }
+      return null
+    },
+  },
 }
