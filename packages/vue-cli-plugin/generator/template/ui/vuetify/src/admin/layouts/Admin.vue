@@ -157,7 +157,9 @@ export default {
       },
     },
     navs() {
-      return navigations(this.$i18n, this.$admin)
+      return navigations(this.$i18n, this.$admin).filter(
+        (n) => n.divider || n.link || (n.children && n.children.length > 0)
+      )
     },
     indexBreadcrumb() {
       let r = this.$router.match("/")

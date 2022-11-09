@@ -125,29 +125,27 @@ const completeParentsObject = (parents, admin) => {
     return parentObj
   })
 }
-const validPermissions = (permissions, admin) => {
-  return (
-    !admin.authProvider ||
-    (Array.isArray(permissions) ? permissions : [permissions]).filter((p) =>
-      admin.store.getters["auth/getPermissions"].includes(p)
-    )
-  )
-}
+
 export const hasActionPermission = (resource, action, admin) => {
   action = admin.getAction(resource, action)
   if (!action) {
     return false
   }
 
+  const userPermissions = admin.authProvider ? admin.store.getters["auth/getPermissions"] : []
+
   if (action.permissions) {
     if (typeof action.permissions === "function") {
-      return action.permissions()
+      return action.permissions(userPermissions)
     } else {
-      return validPermissions(action.permissions, admin)
+      return admin.defaultPermissionEvaluator(
+        userPermissions,
+        Array.isArray(action.permissions) ? action.permissions : [action.permissions]
+      )
     }
   }
 
-  return admin.options.defaultHasPermission
+  return admin.options.defaultActionPermissionEvaluator(userPermissions, admin.getResource(resource), action)
 }
 export const getResourceTitle = (resource, count = 10, admin) => {
   let resourceNameKey = `resources.${resource.name}.name`

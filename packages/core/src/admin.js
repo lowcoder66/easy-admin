@@ -20,7 +20,13 @@ const defaultOptions = {
   defaultActionDisplayMode: "dialog", // dialog drawer page
   defaultTreeActionDisplayMode: "dialog", // dialog drawer page
   defaultResourceIcon: "mdi-view-grid", //
-  defaultHasPermission: true, // true false
+  defaultActionPermissionEvaluator: function () {
+    // args: userPermissions, resource, action
+    return true
+  },
+  defaultPermissionEvaluator: function (userPermissions, actionPermissions) {
+    return actionPermissions.every((p) => userPermissions.includes(p))
+  },
   defaultActions: ["create", "delete", "update", "retrieve", "show"],
   enableOperateAction: true,
   defaultIdKey: "id",
@@ -144,20 +150,20 @@ export default class EasyAdmin {
     }
     this.getFieldLabel = (resource, field) => {
       let key = `resources.${resource}.fields.${field}`
-      let label = null;
+      let label = null
       if (i18n.te(key)) {
-        const result = i18n.t(key);
-        if (typeof result === 'object' && result.fieldName) {
+        const result = i18n.t(key)
+        if (typeof result === "object" && result.fieldName) {
           label = result.fieldName
         } else {
-          label = result;
+          label = result
         }
       }
       if (!label) {
-        label = startCase(field.replace(".", " "));
+        label = startCase(field.replace(".", " "))
       }
 
-      return label;
+      return label
     }
     this.getResourceItemLabel = (resource, item) => {
       let itemLabelKey = null,
