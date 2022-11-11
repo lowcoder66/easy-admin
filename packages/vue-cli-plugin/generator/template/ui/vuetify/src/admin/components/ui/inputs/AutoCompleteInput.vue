@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     filter(item, queryText, itemText) {
-      let itemValue = this.getItemValue(item)
+      let itemValue = String(this.getItemValue(item))
       return (
         (itemValue && itemValue.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1) ||
         (itemText && itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1)

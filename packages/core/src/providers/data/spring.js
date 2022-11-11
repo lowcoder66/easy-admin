@@ -1,15 +1,15 @@
 import {
+  CREATE,
+  DELETE,
+  DELETE_MANY,
   GET_LIST,
   GET_MANY,
   GET_ONE,
-  CREATE,
+  GET_TREE,
+  HTTP_CLIENT,
+  OPERATE,
   UPDATE,
   UPDATE_MANY,
-  DELETE,
-  DELETE_MANY,
-  GET_TREE,
-  OPERATE,
-  HTTP_CLIENT,
 } from "./actions"
 import qs from "qs"
 
@@ -97,11 +97,17 @@ export default (httpClient) => {
         Object.prototype.hasOwnProperty.call(data, "content") &&
         Object.prototype.hasOwnProperty.call(data, "totalElements")
       ) {
+        let content = data["content"]
+        let totalElements = data["totalElements"]
+        let pageNumber = Number(data["number"] || 0) + 1
+        let lastPage = Object.prototype.hasOwnProperty.call(data, "last")
+          ? data["last"]
+          : pageNumber * query.size >= totalElements
         return {
-          data: data["content"],
-          total: data["totalElements"],
-          lastPage: data["last"],
-          page: Number(data["number"] || 0) + 1,
+          data: content,
+          total: totalElements,
+          lastPage: lastPage,
+          page: pageNumber,
         }
       } else if (data instanceof Array) {
         // common list, []

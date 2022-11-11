@@ -13,6 +13,10 @@ export default {
         return {}
       },
     },
+    autoFetch: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     referenceFetchFilter() {
@@ -24,14 +28,16 @@ export default {
     },
   },
   async created() {
-    this.referenceData = await this.fetchReferenceItems()
+    if (this.autoFetch) {
+      this.referenceData = await this.fetchReferenceItems()
+    }
   },
   watch: {
     referenceFetchFilter: {
       async handler() {
         this.referenceData = await this.fetchReferenceItems()
       },
-      immediate: true,
+      immediate: false,
     },
   },
   methods: {
@@ -45,7 +51,7 @@ export default {
       let currentPage = 1
       let fetchResult = await this.fetchPage(currentPage)
       if (fetchResult) {
-        allItems = allItems.concat(fetchResult.data);
+        allItems = allItems.concat(fetchResult.data)
         while (!fetchResult.lastPage) {
           fetchResult = await this.fetchPage(++currentPage)
           allItems = allItems.concat(fetchResult.data)
