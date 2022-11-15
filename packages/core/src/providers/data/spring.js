@@ -99,7 +99,7 @@ export default (httpClient) => {
       ) {
         let content = data["content"]
         let totalElements = data["totalElements"]
-        let pageNumber = Number(data["number"] || 0) + 1
+        let pageNumber = Number(data["number"] ? data["number"] : query.page) || 1
         let lastPage = Object.prototype.hasOwnProperty.call(data, "last")
           ? data["last"]
           : pageNumber * query.size >= totalElements
