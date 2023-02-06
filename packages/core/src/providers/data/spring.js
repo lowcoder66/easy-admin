@@ -90,8 +90,8 @@ export default (httpClient) => {
         }
       }
 
-      let { data } = await httpClient.get(`${resource}?${qs.stringify(query, { arrayFormat: "repeat" })}`)
-
+      let response = await httpClient.get(`${resource}?${qs.stringify(query, { arrayFormat: "repeat" })}`)
+      let { data } = response
       // spring page response, {content: []}
       if (
         Object.prototype.hasOwnProperty.call(data, "content") &&
@@ -108,6 +108,7 @@ export default (httpClient) => {
           total: totalElements,
           lastPage: lastPage,
           page: pageNumber,
+          rawResponse: response,
         }
       } else if (data instanceof Array) {
         // common list, []
